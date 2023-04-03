@@ -1,8 +1,11 @@
 import React from 'react';
+import Header from '../components/Header';
 
 function MainContent() {
   return (
-    <div>MainContent</div>
+    <section>
+      <Header />
+    </section>
   );
 }
 
