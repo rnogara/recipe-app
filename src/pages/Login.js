@@ -7,7 +7,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [isDisabled, setDisabled] = useState(true);
   const history = useHistory();
-  const { functions: { setEmail } } = useContext(AppContext);
+  const { functions: { setEmail, setTitle } } = useContext(AppContext);
 
   useEffect(() => {
     const minCharacters = 6;
@@ -25,6 +25,7 @@ function Login() {
     setEmail(componentEmail);
     localStorage.setItem('user', JSON.stringify(userEmail));
     history.push('/meals');
+    setTitle('Meals');
   };
 
   return (

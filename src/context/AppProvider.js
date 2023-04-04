@@ -7,6 +7,7 @@ export function AppProvider({ children }) {
   const [email, setEmail] = useState('');
   const [meals, setMeals] = useState({ meals: [] });
   const [drinks, setDrinks] = useState({ drinks: [] });
+  const [title, setTitle] = useState('');
   const state = useMemo(() => ({
     user: {
       email,
@@ -19,6 +20,10 @@ export function AppProvider({ children }) {
       setEmail,
       setDrinks,
       setMeals,
+      setTitle,
+    },
+    helpers: {
+      title,
     },
   }), [email, setEmail]);
   return (
