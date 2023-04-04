@@ -25,7 +25,7 @@ export function AppProvider({ children }) {
     helpers: {
       title,
     },
-  }), [email, setEmail]);
+  }), [email, title, drinks, meals, setEmail, setTitle, setDrinks, setMeals]);
   return (
     <AppContext.Provider value={ state }>
       { children }
