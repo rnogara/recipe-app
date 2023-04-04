@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import useFetch from '../hooks/useFetch';
 import { AppContext } from '../context/AppProvider';
 import RecipeCardMeals from './RecipeCardMeals';
+import RecipeCardDrinks from './RecipeCardDrinks';
 
 const MEALS_API = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 const DRINKS_API = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -11,7 +12,7 @@ function Recipes() {
   const URL_API = title === 'Meals' ? MEALS_API : DRINKS_API;
   const [isLoading, , recipes, fetchData] = useFetch({ [title.toLowerCase()]: [] });
   const [choosedResponse, RecipeCard] = title === 'Meals'
-    ? [apiResponse.meals, RecipeCardMeals] : [apiResponse.drinks];
+    ? [apiResponse.meals, RecipeCardMeals] : [apiResponse.drinks, RecipeCardDrinks];
 
   useEffect(() => {
     fetchData(URL_API);
