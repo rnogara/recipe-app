@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 
 function RecipeCardMeals({ recipe: { strMeal, strMealThumb }, index }) {
   return (
-    <section data-testId={ `${index}-recipe-card` }>
+    <section data-testid={ `${index}-recipe-card` }>
       <img
-        data
         src={ strMealThumb }
         alt={ strMeal }
-        data-testId={ `${index}-card-img` }
+        data-testid={ `${index}-card-img` }
       />
-      <h4 data-testId={ `${index}-card-name` }>{ strMeal }</h4>
+      <h4 data-testid={ `${index}-card-name` }>{ strMeal }</h4>
     </section>
   );
 }
