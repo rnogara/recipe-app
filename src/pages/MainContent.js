@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 // import { AppContext } from '../context/AppProvider';
-import Recipes from '../components/Recipes';
+import Recipes from './Recipes';
 
 function MainContent({ title: staticTitle }) {
   // const { helpers: { title } } = useContext(AppContext);
