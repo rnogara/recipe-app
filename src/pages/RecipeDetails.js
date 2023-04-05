@@ -35,8 +35,10 @@ function RecipeDetail() {
       video: recipeData.strYoutube || 'false',
     };
     for (let i = 1; i <= ingredientsRange; i += 1) {
-      payload.ingredients.push(recipeData[ing + i]);
-      payload.measurements.push(recipeData[meas + i]);
+      if (recipeData[ing + i] !== null && recipeData[ing + i] !== undefined) {
+        payload.ingredients.push(recipeData[ing + i]);
+        payload.measurements.push(recipeData[meas + i]);
+      }
     }
     return payload;
   };
