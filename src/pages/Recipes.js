@@ -31,6 +31,7 @@ function Recipes({ title }) {
     <div className="recipes-list">
       <Header />
       <section>
+        { console.log(choosedResponse) }
         {
           categories[title.toLowerCase()]
             .map(
