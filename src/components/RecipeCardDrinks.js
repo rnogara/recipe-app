@@ -5,7 +5,6 @@ function RecipeCardDrinks({ recipe: { strDrink, strDrinkThumb }, index }) {
   return (
     <section data-testid={ `${index}-recipe-card` }>
       <img
-        data
         src={ strDrinkThumb }
         alt={ strDrink }
         data-testid={ `${index}-card-img` }
