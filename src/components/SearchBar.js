@@ -7,27 +7,24 @@ function SearchBar() {
   const history = useHistory();
   const [option, setOption] = useState('');
   const [searchText, setSearchText] = useState('');
-  const { helpers: { title },
-    functions } = useContext(AppContext);
+  const { helpers: { title }, functions } = useContext(AppContext);
   const [, , result, fetchData] = useFetch('');
   const firstLetter = 'first-letter';
 
   useEffect(() => {
-    if (option === firstLetter && searchText.length > 1) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
-  }, [searchText, option]);
-
-  useEffect(() => {
     const fetchedData = result.meals || result.drinks;
-    console.log(Object.values(result)[0]);
     if (Object.keys(result).length === 1 && Object.values(result)[0] == null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
     if (fetchedData !== undefined && fetchedData.length === 1) {
-      const dataForId = result[title.toLowerCase()][0];
-      const id = Number(dataForId.idMeal);
-      history.push(`/${title.toLowerCase()}/${id}`);
+      if (title === 'Meals') {
+        const dataForId = result.meals[0];
+        history.push(`/meals/${dataForId.idMeal}`);
+      }
+      if (title === 'Drinks') {
+        const dataForId = result.drinks[0];
+        history.push(`/drinks/${dataForId.idDrink}`);
+      }
     }
     if (fetchedData !== undefined && fetchedData.length > 1) {
       functions[`set${title}`](result[title.toLowerCase()]);
@@ -57,6 +54,9 @@ function SearchBar() {
   };
 
   const handleSearchBtn = () => {
+    if (option === firstLetter && searchText.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    }
     if (title === 'Meals') {
       handleMealFetch();
     }
