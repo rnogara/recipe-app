@@ -12,21 +12,19 @@ function Header() {
 
   const searchIcon = (
     <button
-      data-testid="search-top-btn"
       onClick={ () => setIsSearchClicked(!isSearchClicked) }
     >
-      <img src={ SIcon } alt="Search Icon" />
+      <img data-testid="search-top-btn" src={ SIcon } alt="Search Icon" />
     </button>
   );
   return (
     <header>
       <h3>Recipes App</h3>
       <button
-        data-testid="profile-top-btn"
         onClick={ () => history.push('/profile') }
         src={ PIcon }
       >
-        <img src={ PIcon } alt="Profile Icon" />
+        <img data-testid="profile-top-btn" src={ PIcon } alt="Profile Icon" />
       </button>
       { (title === 'Meals' || title === 'Drinks') && searchIcon }
       <h1 data-testid="page-title">{ title }</h1>

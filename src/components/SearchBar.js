@@ -21,7 +21,7 @@ function SearchBar() {
         <input
           type="text"
           placeholder="Digite sua pesquisa"
-          data-testid={ option }
+          data-testid="search-input"
           value={ searchText }
           onChange={ ({ target }) => setSearchText(target.value) }
         />

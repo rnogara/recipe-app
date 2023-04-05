@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
 import useRecipes from '../hooks/useRecipes';
 import { AppContext } from '../context/AppProvider';
+import Header from '../components/Header';
 
 function Recipes({ title }) {
   const { functions } = useContext(AppContext);
@@ -11,6 +12,7 @@ function Recipes({ title }) {
 
   useEffect(() => {
     fetchData(URL_API);
+    functions.setTitle(title);
   }, []);
 
   useEffect(() => {
@@ -21,6 +23,7 @@ function Recipes({ title }) {
 
   return (
     <div className="recipes-list">
+      <Header />
       {
         choosedResponse.map((recipe, index) => {
           const indexLimit = 12;
