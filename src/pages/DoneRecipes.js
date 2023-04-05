@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import Header from '../components/Header';
+import { AppContext } from '../context/AppProvider';
 
 function DoneRecipes() {
+  const { functions: { setTitle } } = useContext(AppContext);
+
+  useEffect(() => {
+    setTitle('Done Recipes');
+  }, []);
+
   return (
-    <div>DoneRecipes</div>
+    <section>
+      <Header />
+    </section>
   );
 }
 

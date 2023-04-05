@@ -1,14 +1,24 @@
-import React from 'react';
+// import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import RecipeDetail from '../components/RecipeDetail';
+// import { AppContext } from '../context/AppProvider';
+import Recipes from './Recipes';
 
-function MainContent() {
+function MainContent({ title: staticTitle }) {
+  // const { helpers: { title } } = useContext(AppContext);
   return (
     <section>
       <Header />
-      <RecipeDetail />
+      {
+        (staticTitle === 'Meals' || staticTitle === 'Drinks')
+          && <Recipes title={ staticTitle } />
+      }
     </section>
   );
 }
+
+MainContent.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default MainContent;

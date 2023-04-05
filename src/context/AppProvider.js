@@ -5,8 +5,8 @@ export const AppContext = createContext();
 
 export function AppProvider({ children }) {
   const [email, setEmail] = useState('');
-  const [meals, setMeals] = useState({ meals: [] });
-  const [drinks, setDrinks] = useState({ drinks: [] });
+  const [meals, setMeals] = useState([]);
+  const [drinks, setDrinks] = useState([]);
   const [title, setTitle] = useState('');
   const state = useMemo(() => ({
     user: {
