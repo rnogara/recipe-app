@@ -10,7 +10,8 @@ import generateId from '../helpers/generateId';
 function Recipes({ title }) {
   const { functions } = useContext(AppContext);
   const [isLoading, , recipes, fetchRecipes] = useFetch({ [title.toLowerCase()]: [] });
-  const { URL_API, choosedResponse, RecipeCard, URL_CATEGORIES } = useRecipes(title);
+  const { URL_API, choosedResponse, RecipeCard,
+    URL_CATEGORIES, URL_CATEGORY_SELECTED } = useRecipes(title);
   const [loadingCategories, , categories, fetchCategories] = useFetch(
     { [title.toLowerCase()]: [] },
   );
@@ -31,7 +32,6 @@ function Recipes({ title }) {
     <div className="recipes-list">
       <Header />
       <section>
-        { console.log(choosedResponse) }
         {
           categories[title.toLowerCase()]
             .map(
@@ -41,12 +41,21 @@ function Recipes({ title }) {
                   return (<CategoryCard
                     category={ category }
                     key={ generateId() }
+                    onClick={ (e) => {
+                      fetchRecipes(URL_CATEGORY_SELECTED + e.target.innerText);
+                    } }
                   />);
                 }
                 return null;
               },
             )
         }
+        <button
+          data-testid="All-category-filter"
+          onClick={ () => fetchRecipes(URL_API) }
+        >
+          All
+        </button>
       </section>
       <section>
         {
