@@ -1,19 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
+import useRecipes from '../hooks/useRecipes';
 import { AppContext } from '../context/AppProvider';
-import RecipeCardMeals from './RecipeCardMeals';
-import RecipeCardDrinks from './RecipeCardDrinks';
-
-const MEALS_API = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-const DRINKS_API = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
 function Recipes({ title }) {
-  const { apiResponse, functions } = useContext(AppContext);
-  const URL_API = title === 'Meals' ? MEALS_API : DRINKS_API;
+  const { functions } = useContext(AppContext);
   const [isLoading, , recipes, fetchData] = useFetch({ [title.toLowerCase()]: [] });
-  const [choosedResponse, RecipeCard] = title === 'Meals'
-    ? [apiResponse.meals, RecipeCardMeals] : [apiResponse.drinks, RecipeCardDrinks];
+  const { URL_API, choosedResponse, RecipeCard } = useRecipes(title);
 
   useEffect(() => {
     fetchData(URL_API);
