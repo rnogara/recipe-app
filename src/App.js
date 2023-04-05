@@ -27,22 +27,8 @@ function App() {
         <Route path="/meals/:id" component={ MainContent } />
         <Route path="/done-recipes" component={ DoneRecipies } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
-        <Route
-          path="/meals"
-          render={ () => (
-            <MainContent
-              title="Meals"
-            />
-          ) }
-        />
-        <Route
-          path="/drinks"
-          render={ () => (
-            <MainContent
-              title="Drinks"
-            />
-          ) }
-        />
+        <Route path="/meals" component={ MainContent } />
+        <Route path="/drinks" component={ MainContent } />
         <Route path="/profile" component={ Profile } />
         <Route exact path="/" component={ Login } />
       </Switch>
