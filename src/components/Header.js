@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import SIcon from '../images/searchIcon.svg';
@@ -15,7 +15,7 @@ function Header() {
       data-testid="search-top-btn"
       onClick={ () => setIsSearchClicked(!isSearchClicked) }
     >
-      {SIcon}
+      <img src={ SIcon } alt="Search Icon" />
     </button>
   );
   return (
@@ -24,8 +24,9 @@ function Header() {
       <button
         data-testid="profile-top-btn"
         onClick={ () => history.push('/profile') }
+        src={ PIcon }
       >
-        {PIcon}
+        <img src={ PIcon } alt="Profile Icon" />
       </button>
       { (title === 'Meals' || title === 'Drinks') && searchIcon }
       <h1 data-testid="page-title">{ title }</h1>
