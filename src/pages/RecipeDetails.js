@@ -4,16 +4,50 @@ import useFetch from '../hooks/useFetch';
 
 function RecipeDetail() {
   const [detailedRecipe, setDetailedRecipe] = useState(null);
+  const [ recipeRecommended, setRecipeRecommended ] = useState([])
   const params = useParams();
   const history = useHistory();
   const fromURL = history.location.pathname;
   const { id } = params;
   const recipeType = fromURL.includes('meal') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+    const detailsType = fromURL.includes('meal') ? `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=`
+    : `https://www.themealdb.com/api/json/v1/1/search.php?s=`;
   const [, , recipe, fetchingData] = useFetch({
     meals: false,
     drinks: false,
   });
+
+  const [, , recommendations, fetchingRecommendations ] = useFetch({
+    meals: [],
+    drinks: [{strDrinkThum: 'teste'}],
+  });
+
+  useEffect(() => {
+    fetchingRecommendations(detailsType)
+  },[])
+
+  useEffect(() => {
+    setRecipeRecommended(getRecommendations(recommendations))
+  }, [recommendations])
+  
+  const getRecommendations = (recommendList) => {
+    if(recommendations !== undefined) {
+      const list = fromURL.includes('meal') ? [recommendList.meals]
+        : [recommendList.drinks];
+      const finalList = []
+      const newList = list[0].slice(0, 6)
+      newList.forEach(element => {
+        finalList.push({
+          id: element.idDrink || element.idMeal,
+          Thumb: element.strDrinkThumb || element.strMealThumb,
+          name: element.strDrink || element.strMeal })
+      });
+        console.log(recommendList);
+        return finalList
+    }
+  }
+  
 
   const getDetails = (detailed) => {
     const ingredientsRange = 20;
