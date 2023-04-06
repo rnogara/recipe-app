@@ -8,15 +8,16 @@ function SearchBar() {
   const [option, setOption] = useState('');
   const [searchText, setSearchText] = useState('');
   const { helpers: { title }, functions } = useContext(AppContext);
-  const [, , result, fetchData] = useFetch('');
+  const [, error, result, fetchData] = useFetch({ [title.toLowerCase()]: [] });
   const firstLetter = 'first-letter';
 
   useEffect(() => {
-    const fetchedData = result.meals || result.drinks;
-    if (Object.keys(result).length === 1 && Object.values(result)[0] == null) {
+    const fetchedData = result[title.toLowerCase()];
+    if ((Object.keys(result).length === 1
+    && Object.values(result)[0] == null) || error !== null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
-    if (fetchedData !== undefined && fetchedData.length === 1) {
+    } else if (fetchedData !== undefined
+    && fetchedData.length === 1) {
       if (title === 'Meals') {
         const dataForId = result.meals[0];
         history.push(`/meals/${dataForId.idMeal}`);
@@ -25,11 +26,11 @@ function SearchBar() {
         const dataForId = result.drinks[0];
         history.push(`/drinks/${dataForId.idDrink}`);
       }
+    } else if (fetchedData !== undefined
+    && fetchedData.length > 1) {
+      functions[`set${title}`](fetchedData);
     }
-    if (fetchedData !== undefined && fetchedData.length > 1) {
-      functions[`set${title}`](result[title.toLowerCase()]);
-    }
-  }, [result]);
+  }, [result, error]);
 
   const handleMealFetch = () => {
     switch (option) {
