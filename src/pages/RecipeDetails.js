@@ -35,7 +35,8 @@ function RecipeDetail() {
       video: recipeData.strYoutube || 'false',
     };
     for (let i = 1; i <= ingredientsRange; i += 1) {
-      if (recipeData[ing + i] !== null && recipeData[ing + i] !== undefined) {
+      const ingRef = recipeData[ing + i];
+      if (ingRef !== null && ingRef !== undefined && ingRef !== '') {
         payload.ingredients.push(recipeData[ing + i]);
         payload.measurements.push(recipeData[meas + i]);
       }
