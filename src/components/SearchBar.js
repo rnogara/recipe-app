@@ -1,18 +1,68 @@
-import React, { useEffect, useState } from 'react';
-// import useFetch from '../hooks/useFetch';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import useFetch from '../hooks/useFetch';
+import { AppContext } from '../context/AppProvider';
 
 function SearchBar() {
+  const history = useHistory();
   const [option, setOption] = useState('');
   const [searchText, setSearchText] = useState('');
+  const { helpers: { title }, functions } = useContext(AppContext);
+  const [, , result, fetchData] = useFetch('');
+  const firstLetter = 'first-letter';
 
   useEffect(() => {
-    if (option === 'first-letter-search-radio' && searchText.length > 1) {
+    const fetchedData = result.meals || result.drinks;
+    if (Object.keys(result).length === 1 && Object.values(result)[0] == null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
-  }, [searchText, option]);
+    if (fetchedData !== undefined && fetchedData.length === 1) {
+      if (title === 'Meals') {
+        const dataForId = result.meals[0];
+        history.push(`/meals/${dataForId.idMeal}`);
+      }
+      if (title === 'Drinks') {
+        const dataForId = result.drinks[0];
+        history.push(`/drinks/${dataForId.idDrink}`);
+      }
+    }
+    if (fetchedData !== undefined && fetchedData.length > 1) {
+      functions[`set${title}`](result[title.toLowerCase()]);
+    }
+  }, [result]);
+
+  const handleMealFetch = () => {
+    switch (option) {
+    case 'name':
+      return fetchData(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`);
+    case firstLetter:
+      return fetchData(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchText.toLowerCase()}`);
+    default:
+      return fetchData(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchText.toLowerCase()}`);
+    }
+  };
+
+  const handleDrinksFetch = () => {
+    switch (option) {
+    case 'name':
+      return fetchData(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`);
+    case firstLetter:
+      return fetchData(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchText.toLowerCase()}`);
+    default:
+      return fetchData(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchText.toLowerCase()}`);
+    }
+  };
 
   const handleSearchBtn = () => {
-    // useFetch();
+    if (option === firstLetter && searchText.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    }
+    if (title === 'Meals') {
+      handleMealFetch();
+    }
+    if (title === 'Drinks') {
+      handleDrinksFetch();
+    }
   };
 
   return (
@@ -28,7 +78,7 @@ function SearchBar() {
         <label htmlFor="ingredients">
           Ingredientes
           <input
-            value="ingredient-search-radio"
+            value="ingredient"
             type="radio"
             name="option"
             data-testid="ingredient-search-radio"
@@ -38,7 +88,7 @@ function SearchBar() {
         <label htmlFor="name">
           Nome
           <input
-            value="name-search-radio"
+            value="name"
             type="radio"
             name="option"
             data-testid="name-search-radio"
@@ -48,7 +98,7 @@ function SearchBar() {
         <label htmlFor="first-letter">
           Primeira Letra
           <input
-            value="first-letter-search-radio"
+            value="first-letter"
             type="radio"
             name="option"
             data-testid="first-letter-search-radio"
