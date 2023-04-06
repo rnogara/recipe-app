@@ -35,13 +35,15 @@ function Details({ payload }) {
       <h4>
         Ingredients
       </h4>
-      {ingredients.map((ing, index) => ((
-        <p
-          key={ `${ing}${index}` }
-          data-testid={ `${index}-ingredient-name-and-measure` }
-        >
-          {`${measurements[index] || ''} ${ing || ''}`}
-        </p>)))}
+      <ul>
+        {ingredients.map((ing, index) => ((
+          <li
+            key={ `${ing}${index}` }
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
+            {`${measurements[index] || ''} ${ing || ''}`}
+          </li>)))}
+      </ul>
       <h4>
         Instructions
       </h4>
