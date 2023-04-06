@@ -53,12 +53,20 @@ function RecipeDetail() {
   }, [recipe]);
 
   return (
-    <section
-      className="details"
-    >
-      {detailedRecipe.category === undefined ? 'Carregando'
-        : <Details payload={ detailedRecipe } />}
-    </section>
+    <div>
+      <section
+        className="details"
+      >
+        {detailedRecipe.category === undefined ? 'Carregando'
+          : <Details payload={ detailedRecipe } />}
+      </section>
+      <button
+        data-testid="start-recipe-btn"
+        style={ { position: 'fixed', bottom: '0px' } }
+      >
+        Start Recipe
+      </button>
+    </div>
   );
 }
 
