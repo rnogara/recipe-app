@@ -7,7 +7,7 @@ import useFetch from '../hooks/useFetch';
 
 function CategoriesList({ title, fetchRecipes }) {
   const { URL_CATEGORIES, URL_CATEGORY_SELECTED, URL_API } = useRecipes(title);
-  const [loadingCategories, , categories, fetchCategories] = useFetch(
+  const [, , categories, fetchCategories] = useFetch(
     { [title.toLowerCase()]: [] },
   );
   const [toggles, setToggles] = useState({});
@@ -20,8 +20,6 @@ function CategoriesList({ title, fetchRecipes }) {
     setToggles(categories[title.toLowerCase()]
       .reduce((acc, curr) => ({ ...acc, [curr.strCategory]: false }), {}));
   }, [categories]);
-
-  if (loadingCategories) return <h1>Loading...</h1>;
 
   const handleCategoriesClick = ({ target: { innerText } }) => {
     if (!toggles[innerText]) {
