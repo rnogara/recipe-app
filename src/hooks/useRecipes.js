@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AppContext } from '../context/AppProvider';
 import RecipeCardMeals from '../components/RecipeCardMeals';
@@ -15,6 +15,7 @@ function useRecipes(title) {
   const { pathname } = useLocation();
   const lowerTitle = title.toLowerCase();
   const { apiResponse } = useContext(AppContext);
+  const [recipes, setRecipes] = useState([]);
 
   const URL_API = pathname.includes('meals') ? MEALS_API : DRINKS_API;
   const RecipeCard = title === 'Meals' ? RecipeCardMeals : RecipeCardDrinks;
@@ -22,9 +23,14 @@ function useRecipes(title) {
   const URL_CATEGORY_SELECTED = title === 'Meals'
     ? CATEGORY_SELECTED_MEALS : CATEGORY_SELECTED_DRINKS;
 
+  useEffect(() => {
+    console.log(recipes);
+    setRecipes(apiResponse[lowerTitle]);
+  }, [apiResponse[lowerTitle]]);
+
   return {
     URL_API,
-    recipesResponse: apiResponse[lowerTitle],
+    recipesResponse: recipes,
     RecipeCard,
     URL_CATEGORIES,
     URL_CATEGORY_SELECTED,
