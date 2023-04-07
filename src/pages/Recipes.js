@@ -4,62 +4,52 @@ import useFetch from '../hooks/useFetch';
 import useRecipes from '../hooks/useRecipes';
 import { AppContext } from '../context/AppProvider';
 import Header from '../components/Header';
-import CategoryCard from '../components/CategoryCard';
 import generateId from '../helpers/generateId';
+import CategoriesList from '../components/CategoriesList';
+// import useToggle from '../hooks/useToggle';
 
 function Recipes({ title }) {
   const { functions } = useContext(AppContext);
   const [isLoading, , recipes, fetchRecipes] = useFetch({ [title.toLowerCase()]: [] });
-  const { URL_API, choosedResponse, RecipeCard,
-    URL_CATEGORIES, URL_CATEGORY_SELECTED } = useRecipes(title);
-  const [loadingCategories, , categories, fetchCategories] = useFetch(
-    { [title.toLowerCase()]: [] },
-  );
+  // const [loadingCategories, , categories, fetchCategories] = useFetch(
+  //   { [title.toLowerCase()]: [] },
+  // );
+  const { URL_API, recipesResponse, RecipeCard } = useRecipes(title);
 
   useEffect(() => {
     fetchRecipes(URL_API);
+    // fetchCategories(URL_CATEGORIES);
     functions.setTitle(title);
-    fetchCategories(URL_CATEGORIES);
   }, []);
 
   useEffect(() => {
     functions[`set${title}`](recipes[title.toLowerCase()]);
   }, [recipes]);
 
-  if (isLoading || loadingCategories) return <h1>Loading...</h1>;
+  // const handleCategoriesClick = ({ target: { innerText } }) => {
+  //   if (!toggles[innerText]) {
+  //     fetchRecipes(URL_CATEGORY_SELECTED + innerText);
+  //   } else {
+  //     fetchRecipes(URL_API);
+  //   }
+  //   const allToggles = categories[title.toLowerCase()]
+  //     .reduce((acc, curr) => (
+  //       { ...acc, [curr.strCategory]: false }
+  //     ), {});
+  //   setToggles({ ...allToggles, [innerText]: !toggles[innerText] });
+  // };
+
+  if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className="recipes-list">
       <Header />
       <section>
-        {
-          categories[title.toLowerCase()]
-            .map(
-              (category, index) => {
-                const indexLimit = 5;
-                if (index < indexLimit) {
-                  return (<CategoryCard
-                    category={ category }
-                    key={ generateId() }
-                    onClick={ (e) => {
-                      fetchRecipes(URL_CATEGORY_SELECTED + e.target.innerText);
-                    } }
-                  />);
-                }
-                return null;
-              },
-            )
-        }
-        <button
-          data-testid="All-category-filter"
-          onClick={ () => fetchRecipes(URL_API) }
-        >
-          All
-        </button>
+        <CategoriesList title={ title } fetchRecipes={ fetchRecipes } />
       </section>
       <section>
         {
-          choosedResponse.map((recipe, index) => {
+          recipesResponse.map((recipe, index) => {
             const indexLimit = 12;
             if (index < indexLimit) {
               return (<RecipeCard
