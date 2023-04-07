@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import Details from '../components/Details';
 import useFetch from '../hooks/useFetch';
 
 function RecipeDetail() {
-  const [detailedRecipe, setDetailedRecipe] = useState(null);
+  const [detailedRecipe, setDetailedRecipe] = useState({
+    title: undefined,
+  });
   const params = useParams();
   const history = useHistory();
   const fromURL = history.location.pathname;
@@ -25,14 +28,18 @@ function RecipeDetail() {
       title: recipeData.strMeal || recipeData.strDrink,
       thumbnail: recipeData.strMealThumb || recipeData.strDrinkThumb,
       instructions: recipeData.strInstructions,
-      category: recipeData.strCategory,
+      category: fromURL.includes('meals') ? recipeData.strCategory
+        : recipeData.strAlcoholic,
       ingredients: [],
       measurements: [],
-      video: recipeData.strYoutube || false,
+      video: recipeData.strYoutube || 'false',
     };
     for (let i = 1; i <= ingredientsRange; i += 1) {
-      payload.ingredients.push(recipeData[ing + i]);
-      payload.measurements.push(recipeData[meas + i]);
+      const ingRef = recipeData[ing + i];
+      if (ingRef !== null && ingRef !== undefined && ingRef !== '') {
+        payload.ingredients.push(recipeData[ing + i]);
+        payload.measurements.push(recipeData[meas + i]);
+      }
     }
     return payload;
   };
@@ -46,7 +53,12 @@ function RecipeDetail() {
   }, [recipe]);
 
   return (
-    <p>{detailedRecipe === null ? 'Carregando' : detailedRecipe.title }</p>
+    <section
+      className="details"
+    >
+      {detailedRecipe.category === undefined ? 'Carregando'
+        : <Details payload={ detailedRecipe } />}
+    </section>
   );
 }
 
