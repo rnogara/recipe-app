@@ -43,12 +43,13 @@ function Recomendations({ payload }) {
 }
 
 Recomendations.propTypes = {
-  payload: PropTypes.shape({
-    name: PropTypes.string,
-    Thumb: PropTypes.string,
-    id: PropTypes.string,
-    map: PropTypes.func,
-  }).isRequired,
+  payload: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      Thumb: PropTypes.string,
+      id: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default Recomendations;
