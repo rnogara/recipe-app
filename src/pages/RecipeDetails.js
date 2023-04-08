@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import Details from '../components/Details';
 import useFetch from '../hooks/useFetch';
+import Recomendations from '../components/Recomendations';
 
 function RecipeDetail() {
   const [recipeRecommended, setRecipeRecommended] = useState([{ name: undefined }]);
@@ -9,13 +10,14 @@ function RecipeDetail() {
     title: undefined,
   });
   const params = useParams();
-  const history = useHistory();
-  const fromURL = history.location.pathname;
+  const { location: { pathname } } = useHistory();
   const { id } = params;
-  const recipeType = fromURL.includes('meal') ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-    : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-  const detailsType = fromURL.includes('meal') ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
-    : 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const MEAL_S_ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const COCTAIL_S_ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const MEAL_ID_ENDPOINT = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const COCKTAIL_ID_ENDPOINT = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const recipeType = pathname.includes('meal') ? MEAL_ID_ENDPOINT : COCKTAIL_ID_ENDPOINT;
+  const detailsType = pathname.includes('meal') ? COCTAIL_S_ENDPOINT : MEAL_S_ENDPOINT;
   const [, , recipe, fetchingData] = useFetch({
     meals: false,
     drinks: false,
@@ -26,7 +28,7 @@ function RecipeDetail() {
   const getRecommendations = (recommendList) => {
     const recomendationLength = 6;
     if (recommendations !== undefined) {
-      const list = fromURL.includes('meal') ? Object.values({ ...recommendList.drinks })
+      const list = pathname.includes('meal') ? Object.values({ ...recommendList.drinks })
         : Object.values({ ...recommendList.meals });
       const finalList = [];
       const newList = list.slice(0, recomendationLength);
@@ -44,13 +46,13 @@ function RecipeDetail() {
     const ingredientsRange = 20;
     const ing = 'strIngredient';
     const meas = 'strMeasure';
-    const recipeData = fromURL.includes('meal') ? { ...detailed.meals[0] }
+    const recipeData = pathname.includes('meal') ? { ...detailed.meals[0] }
       : { ...detailed.drinks[0] };
     const payload = {
       title: recipeData.strMeal || recipeData.strDrink,
       thumbnail: recipeData.strMealThumb || recipeData.strDrinkThumb,
       instructions: recipeData.strInstructions,
-      category: fromURL.includes('meals') ? recipeData.strCategory
+      category: pathname.includes('meals') ? recipeData.strCategory
         : recipeData.strAlcoholic,
       ingredients: [],
       measurements: [],
@@ -88,6 +90,8 @@ function RecipeDetail() {
     >
       {detailedRecipe.category === undefined ? 'Carregando'
         : <Details payload={ detailedRecipe } />}
+      {recipeRecommended.length === 0 ? 'Carregando'
+        : <Recomendations payload={ recipeRecommended } />}
     </section>
   );
 }
