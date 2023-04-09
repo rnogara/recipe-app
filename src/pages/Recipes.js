@@ -8,9 +8,7 @@ function Recipes({ title }) {
   return (
     <div className="recipes-list">
       <Header />
-      <section>
-        <CategoriesList title={ title } fetchRecipes={ fetchRecipes } />
-      </section>
+      <CategoriesList title={ title } />
       <RecipesList title={ title } />
     </div>
   );

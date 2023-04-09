@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import useRecipes from '../hooks/useRecipes';
 import CategoryCard from './CategoryCard';
 import generateId from '../helpers/generateId';
 import useFetch from '../hooks/useFetch';
+import { AppContext } from '../context/AppProvider';
 
-function CategoriesList({ title, fetchRecipes }) {
+function CategoriesList({ title }) {
+  const lowerTitle = title.toLowerCase();
   const { URL_CATEGORIES, URL_CATEGORY_SELECTED, URL_API } = useRecipes(title);
   const [isLoading, , categories, fetchCategories] = useFetch(
-    { [title.toLowerCase()]: [] },
+    { [lowerTitle]: [] },
   );
+  const [, , recipes, fetchRecipes] = useFetch({ [lowerTitle]: [] });
   const [toggles, setToggles] = useState({});
+  const { functions } = useContext(AppContext);
 
   useEffect(() => {
     fetchCategories(URL_CATEGORIES);
   }, []);
 
   useEffect(() => {
-    setToggles(categories[title.toLowerCase()]
+    functions[`set${title}`](recipes[lowerTitle]);
+  }, [recipes]);
+
+  useEffect(() => {
+    setToggles(categories[lowerTitle]
       .reduce((acc, curr) => ({ ...acc, [curr.strCategory]: false }), {}));
   }, [categories]);
 
@@ -27,7 +35,7 @@ function CategoriesList({ title, fetchRecipes }) {
     } else {
       fetchRecipes(URL_API);
     }
-    const allToggles = categories[title.toLowerCase()]
+    const allToggles = categories[lowerTitle]
       .reduce((acc, curr) => (
         { ...acc, [curr.strCategory]: false }
       ), {});
@@ -39,7 +47,7 @@ function CategoriesList({ title, fetchRecipes }) {
   return (
     <section>
       {
-        categories[title.toLowerCase()]
+        categories[lowerTitle]
           .map(
             (category, index) => {
               const indexLimit = 5;
@@ -56,7 +64,14 @@ function CategoriesList({ title, fetchRecipes }) {
       }
       <button
         data-testid="All-category-filter"
-        onClick={ () => fetchRecipes(URL_API) }
+        onClick={ () => {
+          fetchRecipes(URL_API);
+          const allToggles = categories[lowerTitle]
+            .reduce((acc, curr) => (
+              { ...acc, [curr.strCategory]: false }
+            ), {});
+          setToggles(allToggles);
+        } }
       >
         All
       </button>
@@ -66,7 +81,6 @@ function CategoriesList({ title, fetchRecipes }) {
 
 CategoriesList.propTypes = {
   title: PropTypes.string.isRequired,
-  fetchRecipes: PropTypes.func.isRequired,
 };
 
 export default CategoriesList;
