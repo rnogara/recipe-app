@@ -76,6 +76,12 @@ function RecipeDetail() {
     setRecipeRecommended(getRecommendations(recommendations));
   }, [recommendations]);
 
+  // #### lógica a partir do 28 ###
+  const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || []; // pega do LocalStorage as receitas feitas para o req 29
+  // const storageInProgressRecipes = localStorage.getItem('inProgressRecipes');
+
+  // #############################
+
   useEffect(() => {
     fetchingData(recipeType);
   }, []);
@@ -85,14 +91,23 @@ function RecipeDetail() {
   }, [recipe]);
 
   return (
-    <section
-      className="details"
-    >
-      {detailedRecipe.category === undefined ? 'Carregando'
-        : <Details payload={ detailedRecipe } />}
-      {recipeRecommended.length === 0 ? 'Carregando'
-        : <Recomendations payload={ recipeRecommended } />}
-    </section>
+    <div>
+      <section
+        className="details"
+      >
+        {detailedRecipe.category === undefined ? 'Carregando'
+          : <Details payload={ detailedRecipe } />}
+        {recipeRecommended.length === 0 ? 'Carregando'
+          : <Recomendations payload={ recipeRecommended } />}
+      </section>
+      <button
+        data-testid="start-recipe-btn"
+        style={ { position: 'fixed', bottom: '0px' } }
+        hidden={ storageDoneRecipes.some((recipesMade) => recipesMade.id === id) }
+      >
+        Start Recipe
+      </button>
+    </div>
   );
 }
 
