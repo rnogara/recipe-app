@@ -44,6 +44,12 @@ function RecipeDetail() {
     return payload;
   };
 
+  // #### lógica a partir do 28 ###
+  const storageDoneRecipes = localStorage.getItem('doneRecipes'); // pega do LocalStorage as receitas feitas para o req 29
+  const storageInProgressRecipes = localStorage.getItem('inProgressRecipes');
+
+  // #############################
+
   useEffect(() => {
     fetchingData(recipeType);
   }, []);
@@ -60,12 +66,30 @@ function RecipeDetail() {
         {detailedRecipe.category === undefined ? 'Carregando'
           : <Details payload={ detailedRecipe } />}
       </section>
-      <button
+      { storageDoneRecipes.find((recipesMade) => recipesMade.id === id) && (
+        <button
+          data-testid="start-recipe-btn"
+          style={ { position: 'fixed', bottom: '0px' } }
+          hidden={ storageDoneRecipes.find((recipesMade) => recipesMade.id === id) }
+        >
+          Start Recipe
+        </button>) }
+      {/* ### A SEGUIR, UMA SEGUNDA LÓGICA PARA O BOTÃO DO REQ 29
+       <button
         data-testid="start-recipe-btn"
         style={ { position: 'fixed', bottom: '0px' } }
+        hidden={ storageDoneRecipes.find((recipesMade) => recipesMade.id === id) }
       >
         Start Recipe
-      </button>
+      </button> */}
+      { storageInProgressRecipes.find((recipesMade) => recipesMade.id === id) && (
+        <button
+          data-testid="start-recipe-btn"
+          style={ { position: 'fixed', bottom: '0px' } }
+          hidden={ storageDoneRecipes.find((recipesMade) => recipesMade.id === id) }
+        >
+          Start Recipe
+        </button>) }
     </div>
   );
 }
