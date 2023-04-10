@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import generateId from '../helpers/generateId';
 import useFetch from '../hooks/useFetch';
 import useRecipes from '../hooks/useRecipes';
 import { AppContext } from '../context/AppProvider';
 import Header from '../components/Header';
-import generateId from '../helpers/generateId';
 import CategoriesList from '../components/CategoriesList';
-// import useToggle from '../hooks/useToggle';
 
 function Recipes({ title }) {
   const { functions } = useContext(AppContext);
@@ -25,19 +24,19 @@ function Recipes({ title }) {
   return (
     <div className="recipes-list">
       <Header />
-      <section>
-        <CategoriesList title={ title } fetchRecipes={ fetchRecipes } />
-      </section>
+      <CategoriesList title={ title } fetchRecipes={ fetchRecipes } />
       <section>
         {
           isLoading ? <h1>Loading...</h1> : recipesResponse.map((recipe, index) => {
             const indexLimit = 12;
             if (index < indexLimit) {
-              return (<RecipeCard
-                index={ index }
-                recipe={ recipe }
-                key={ generateId() }
-              />);
+              return (
+                <RecipeCard
+                  index={ index }
+                  recipe={ recipe }
+                  key={ generateId() }
+                />
+              );
             }
             return null;
           })

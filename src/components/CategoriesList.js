@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useRecipes from '../hooks/useRecipes';
 import CategoryCard from './CategoryCard';
-import generateId from '../helpers/generateId';
 import useFetch from '../hooks/useFetch';
 
 function CategoriesList({ title, fetchRecipes }) {
+  const lowerTitle = title.toLowerCase();
   const { URL_CATEGORIES, URL_CATEGORY_SELECTED, URL_API } = useRecipes(title);
-  const [, , categories, fetchCategories] = useFetch(
-    { [title.toLowerCase()]: [] },
+  const [isLoading, , categories, fetchCategories] = useFetch(
+    { [lowerTitle]: [] },
   );
   const [toggles, setToggles] = useState({});
 
@@ -17,7 +17,7 @@ function CategoriesList({ title, fetchRecipes }) {
   }, []);
 
   useEffect(() => {
-    setToggles(categories[title.toLowerCase()]
+    setToggles(categories[lowerTitle]
       .reduce((acc, curr) => ({ ...acc, [curr.strCategory]: false }), {}));
   }, [categories]);
 
@@ -27,24 +27,26 @@ function CategoriesList({ title, fetchRecipes }) {
     } else {
       fetchRecipes(URL_API);
     }
-    const allToggles = categories[title.toLowerCase()]
+    const allToggles = categories[lowerTitle]
       .reduce((acc, curr) => (
         { ...acc, [curr.strCategory]: false }
       ), {});
     setToggles({ ...allToggles, [innerText]: !toggles[innerText] });
   };
 
+  if (isLoading) return <h1>Loading...</h1>;
+
   return (
     <section>
       {
-        categories[title.toLowerCase()]
+        categories[lowerTitle]
           .map(
             (category, index) => {
               const indexLimit = 5;
               if (index < indexLimit) {
                 return (<CategoryCard
                   category={ category }
-                  key={ generateId() }
+                  key={ index }
                   onClick={ handleCategoriesClick }
                 />);
               }
@@ -54,7 +56,14 @@ function CategoriesList({ title, fetchRecipes }) {
       }
       <button
         data-testid="All-category-filter"
-        onClick={ () => fetchRecipes(URL_API) }
+        onClick={ () => {
+          fetchRecipes(URL_API);
+          const allToggles = categories[lowerTitle]
+            .reduce((acc, curr) => (
+              { ...acc, [curr.strCategory]: false }
+            ), {});
+          setToggles(allToggles);
+        } }
       >
         All
       </button>
@@ -64,7 +73,7 @@ function CategoriesList({ title, fetchRecipes }) {
 
 CategoriesList.propTypes = {
   title: PropTypes.string.isRequired,
-  fetchRecipes: PropTypes.func.isRequired,
+  fetchRecipes: PropTypes.string.isRequired,
 };
 
 export default CategoriesList;
