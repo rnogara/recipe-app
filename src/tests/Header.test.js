@@ -2,7 +2,6 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helper/RenderWithRouter';
-import MainContent from '../pages/MainContent';
 import { AppProvider } from '../context/AppProvider';
 
 const searchTestId = 'search-top-btn';
