@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import clipBoardCopy from 'clipboard-copy';
+import PropTypes from 'prop-types';
 
 function ShareAndFav({ url, recipe }) {
   const [copied, setCopied] = useState(false);
@@ -58,5 +58,19 @@ function ShareAndFav({ url, recipe }) {
     </>
   );
 }
+
+ShareAndFav.propTypes = {
+  url: PropTypes.string.isRequired,
+  recipe: PropTypes.shape({
+    title: PropTypes.string,
+    thumbnail: PropTypes.string,
+    category: PropTypes.string,
+    ingredients: PropTypes.arrayOf(PropTypes.string),
+    measurements: PropTypes.arrayOf(PropTypes.string),
+    instructions: PropTypes.string,
+    video: PropTypes.string,
+    alcoholicOrNot: PropTypes.string,
+  }).isRequired,
+};
 
 export default ShareAndFav;
