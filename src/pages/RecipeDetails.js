@@ -106,7 +106,6 @@ function RecipeDetail() {
         style={ { position: 'fixed', bottom: '0px' } }
         hidden={ btnStartLogic }
         onClick={ startBtn }
-        
       >
         { btnStartLogic ? 'Start Recipe' : 'Continue Recipe' }
 
