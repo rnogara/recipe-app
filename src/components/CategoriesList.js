@@ -1,28 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useRecipes from '../hooks/useRecipes';
 import CategoryCard from './CategoryCard';
-import generateId from '../helpers/generateId';
 import useFetch from '../hooks/useFetch';
-import { AppContext } from '../context/AppProvider';
 
-function CategoriesList({ title }) {
+function CategoriesList({ title, fetchRecipes }) {
   const lowerTitle = title.toLowerCase();
   const { URL_CATEGORIES, URL_CATEGORY_SELECTED, URL_API } = useRecipes(title);
   const [isLoading, , categories, fetchCategories] = useFetch(
     { [lowerTitle]: [] },
   );
-  const [, , recipes, fetchRecipes] = useFetch({ [lowerTitle]: [] });
   const [toggles, setToggles] = useState({});
-  const { functions } = useContext(AppContext);
 
   useEffect(() => {
     fetchCategories(URL_CATEGORIES);
   }, []);
-
-  useEffect(() => {
-    functions[`set${title}`](recipes[lowerTitle]);
-  }, [recipes]);
 
   useEffect(() => {
     setToggles(categories[lowerTitle]
@@ -54,7 +46,7 @@ function CategoriesList({ title }) {
               if (index < indexLimit) {
                 return (<CategoryCard
                   category={ category }
-                  key={ generateId() }
+                  key={ index }
                   onClick={ handleCategoriesClick }
                 />);
               }
@@ -81,6 +73,7 @@ function CategoriesList({ title }) {
 
 CategoriesList.propTypes = {
   title: PropTypes.string.isRequired,
+  fetchRecipes: PropTypes.string.isRequired,
 };
 
 export default CategoriesList;
