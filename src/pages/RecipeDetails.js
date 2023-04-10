@@ -78,8 +78,8 @@ function RecipeDetail() {
 
   // #### lógica a partir do 28 ###
   const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || []; // pega do LocalStorage as receitas feitas para o req 29
-  // const storageInProgressRecipes = localStorage.getItem('inProgressRecipes');
-
+  const btnStartLogic = storageDoneRecipes.some((recipesMade) => recipesMade.id === id);
+  // const btnInProgressLogic = storageInProgressRecipes.some((recipesMade) => recipesMade.id === id);
   // #############################
 
   useEffect(() => {
@@ -103,9 +103,10 @@ function RecipeDetail() {
       <button
         data-testid="start-recipe-btn"
         style={ { position: 'fixed', bottom: '0px' } }
-        hidden={ storageDoneRecipes.some((recipesMade) => recipesMade.id === id) }
+        hidden={ btnStartLogic }
       >
-        Start Recipe
+        { btnStartLogic ? 'Start Recipe' : 'Continue Recipe' }
+
       </button>
     </div>
   );
