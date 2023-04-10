@@ -11,7 +11,7 @@ function RecipeDetail() {
     title: undefined,
   });
   const params = useParams();
-  const { location: { pathname } } = useHistory();
+  const { location: { pathname }, push } = useHistory();
   const URLpath = window.location.href;
   const { id } = params;
   const MEAL_S_ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
@@ -81,11 +81,12 @@ function RecipeDetail() {
     setRecipeRecommended(getRecommendations(recommendations));
   }, [recommendations]);
 
-  // #### lógica a partir do 28 ###
-  const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || []; // pega do LocalStorage as receitas feitas para o req 29
-  // const storageInProgressRecipes = localStorage.getItem('inProgressRecipes');
+  const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  const btnStartLogic = storageDoneRecipes.some((recipesMade) => recipesMade.id === id);
 
-  // #############################
+  const startBtn = () => (pathname.includes('meal')
+    ? push(`/meals/${id}/in-progress`)
+    : push(`/drinks/${id}/in-progress`));
 
   useEffect(() => {
     fetchingData(recipeType);
@@ -109,9 +110,11 @@ function RecipeDetail() {
       <button
         data-testid="start-recipe-btn"
         style={ { position: 'fixed', bottom: '0px' } }
-        hidden={ storageDoneRecipes.some((recipesMade) => recipesMade.id === id) }
+        hidden={ btnStartLogic }
+        onClick={ startBtn }
       >
-        Start Recipe
+        { btnStartLogic ? 'Start Recipe' : 'Continue Recipe' }
+
       </button>
     </div>
   );
