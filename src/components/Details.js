@@ -8,6 +8,7 @@ function Details({ payload }) {
     title,
     thumbnail,
     category,
+    alcoholicOrNot,
     ingredients,
     measurements,
     instructions,
@@ -30,7 +31,7 @@ function Details({ payload }) {
       >
         Category :
         {' '}
-        { category }
+        { alcoholicOrNot === '' ? category : alcoholicOrNot }
       </h3>
       <h4>
         Ingredients
@@ -66,6 +67,7 @@ Details.propTypes = {
     measurements: PropTypes.arrayOf(PropTypes.string),
     instructions: PropTypes.string,
     video: PropTypes.string,
+    alcoholicOrNot: PropTypes.string,
   }).isRequired,
 };
 

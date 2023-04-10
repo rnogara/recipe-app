@@ -12,6 +12,7 @@ function RecipeDetail() {
   });
   const params = useParams();
   const { location: { pathname } } = useHistory();
+  const URLpath = window.location.href;
   const { id } = params;
   const MEAL_S_ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const COCTAIL_S_ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -50,11 +51,14 @@ function RecipeDetail() {
     const recipeData = pathname.includes('meal') ? { ...detailed.meals[0] }
       : { ...detailed.drinks[0] };
     const payload = {
+      area: recipeData.strArea || '',
+      id: recipeData.idDrink || recipeData.idMeal,
       title: recipeData.strMeal || recipeData.strDrink,
       thumbnail: recipeData.strMealThumb || recipeData.strDrinkThumb,
       instructions: recipeData.strInstructions,
       category: pathname.includes('meals') ? recipeData.strCategory
-        : recipeData.strAlcoholic,
+        : recipeData.strCategory,
+      alcoholicOrNot: recipeData.strAlcoholic || '',
       ingredients: [],
       measurements: [],
       video: recipeData.strYoutube || 'false',
@@ -98,7 +102,7 @@ function RecipeDetail() {
       >
         {detailedRecipe.category === undefined ? 'Carregando'
           : <Details payload={ detailedRecipe } />}
-        <ShareAndFav />
+        <ShareAndFav url={ URLpath } recipe={ detailedRecipe } />
         {recipeRecommended.length === 0 ? 'Carregando'
           : <Recomendations payload={ recipeRecommended } />}
       </section>
