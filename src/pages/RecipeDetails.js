@@ -10,7 +10,7 @@ function RecipeDetail() {
     title: undefined,
   });
   const params = useParams();
-  const { location: { pathname } } = useHistory();
+  const { location: { pathname }, push } = useHistory();
   const { id } = params;
   const MEAL_S_ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const COCTAIL_S_ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -76,11 +76,12 @@ function RecipeDetail() {
     setRecipeRecommended(getRecommendations(recommendations));
   }, [recommendations]);
 
-  // #### lógica a partir do 28 ###
-  const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || []; // pega do LocalStorage as receitas feitas para o req 29
+  const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   const btnStartLogic = storageDoneRecipes.some((recipesMade) => recipesMade.id === id);
-  // const btnInProgressLogic = storageInProgressRecipes.some((recipesMade) => recipesMade.id === id);
-  // #############################
+
+  const startBtn = () => (pathname.includes('meal')
+    ? push(`/meals/${id}/in-progress`)
+    : push(`/drinks/${id}/in-progress`));
 
   useEffect(() => {
     fetchingData(recipeType);
@@ -104,6 +105,8 @@ function RecipeDetail() {
         data-testid="start-recipe-btn"
         style={ { position: 'fixed', bottom: '0px' } }
         hidden={ btnStartLogic }
+        onClick={ startBtn }
+        
       >
         { btnStartLogic ? 'Start Recipe' : 'Continue Recipe' }
 
