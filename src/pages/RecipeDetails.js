@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Details from '../components/Details';
 import useFetch from '../hooks/useFetch';
 import Recomendations from '../components/Recomendations';
+import ShareAndFav from './ShareAndFav';
 
 function RecipeDetail() {
   const [recipeRecommended, setRecipeRecommended] = useState([{ name: undefined }]);
@@ -97,6 +98,7 @@ function RecipeDetail() {
       >
         {detailedRecipe.category === undefined ? 'Carregando'
           : <Details payload={ detailedRecipe } />}
+        <ShareAndFav />
         {recipeRecommended.length === 0 ? 'Carregando'
           : <Recomendations payload={ recipeRecommended } />}
       </section>
