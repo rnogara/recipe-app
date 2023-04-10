@@ -1,17 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import generateId from '../helpers/generateId';
 import useFetch from '../hooks/useFetch';
 import useRecipes from '../hooks/useRecipes';
 import { AppContext } from '../context/AppProvider';
 import Header from '../components/Header';
+import CategoriesList from '../components/CategoriesList';
 
 function Recipes({ title }) {
   const { functions } = useContext(AppContext);
-  const [isLoading, , recipes, fetchData] = useFetch({ [title.toLowerCase()]: [] });
-  const { URL_API, choosedResponse, RecipeCard } = useRecipes(title);
+  const [isLoading, , recipes, fetchRecipes] = useFetch({ [title.toLowerCase()]: [] });
+  const { URL_API, recipesResponse, RecipeCard } = useRecipes(title);
 
   useEffect(() => {
-    fetchData(URL_API);
+    fetchRecipes(URL_API);
     functions.setTitle(title);
   }, []);
 
@@ -19,24 +21,27 @@ function Recipes({ title }) {
     functions[`set${title}`](recipes[title.toLowerCase()]);
   }, [recipes]);
 
-  if (isLoading) return <h1>Loading...</h1>;
-
   return (
     <div className="recipes-list">
       <Header />
-      {
-        choosedResponse.map((recipe, index) => {
-          const indexLimit = 12;
-          if (index < indexLimit) {
-            return (<RecipeCard
-              index={ index }
-              recipe={ recipe }
-              key={ recipe[`id${title}`] }
-            />);
-          }
-          return null;
-        })
-      }
+      <CategoriesList title={ title } fetchRecipes={ fetchRecipes } />
+      <section>
+        {
+          isLoading ? <h1>Loading...</h1> : recipesResponse.map((recipe, index) => {
+            const indexLimit = 12;
+            if (index < indexLimit) {
+              return (
+                <RecipeCard
+                  index={ index }
+                  recipe={ recipe }
+                  key={ generateId() }
+                />
+              );
+            }
+            return null;
+          })
+        }
+      </section>
     </div>
   );
 }
