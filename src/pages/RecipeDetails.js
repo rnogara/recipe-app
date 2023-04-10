@@ -104,8 +104,9 @@ function RecipeDetail() {
       <button
         data-testid="start-recipe-btn"
         style={ { position: 'fixed', bottom: '0px' } }
-        hidden={ storageDoneRecipes.some((recipesMade) => recipesMade.id === id) }
+        hidden={ btnStartLogic }
         onClick={ startBtn }
+        
       >
         { btnStartLogic ? 'Start Recipe' : 'Continue Recipe' }
 
