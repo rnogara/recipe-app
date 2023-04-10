@@ -13,7 +13,6 @@ function RecipeCardDrinks({ recipe: { strDrink, strDrinkThumb, idDrink }, index 
         />
         <h4 data-testid={ `${index}-card-name` }>{ strDrink }</h4>
       </section>
-
     </Link>
   );
 }
