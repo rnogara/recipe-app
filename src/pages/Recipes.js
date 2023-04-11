@@ -16,7 +16,7 @@ function Recipes({ title }) {
   useEffect(() => {
     fetchRecipes(URL_API);
     functions.setTitle(title);
-  }, []);
+  }, [title]);
 
   useEffect(() => {
     functions[`set${title}`](recipes[title.toLowerCase()]);
