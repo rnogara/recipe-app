@@ -24,7 +24,6 @@ describe('00. Testando a tela de receitas em progresso', () => {
     const { history } = renderWithRouter(<AppProvider><App /></AppProvider>);
     history.push('/drinks/15997/in-progress');
     await waitFor(() => screen.getByRole('heading', { level: 1, name: 'GG' }));
-    screen.logTestingPlaygroundURL();
     const recipeTitle = screen.getByRole('heading', { level: 1, name: 'GG' });
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeTitle).toBeDefined();

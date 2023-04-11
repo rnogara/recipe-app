@@ -21,6 +21,9 @@ function Ingredients({ recipe, id, title }) {
       if (index === parseInt(value, 10)) return { ...ingredient, done: checked };
       return ingredient;
     });
+    const allRecipesInProgress = { ...recipesInProgress,
+      [title]: { ...recipesInProgress[title], [id]: mapedSteps } };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(allRecipesInProgress));
     return mapedSteps;
   });
 
