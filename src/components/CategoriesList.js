@@ -73,7 +73,7 @@ function CategoriesList({ title, fetchRecipes }) {
 
 CategoriesList.propTypes = {
   title: PropTypes.string.isRequired,
-  fetchRecipes: PropTypes.string.isRequired,
+  fetchRecipes: PropTypes.func.isRequired,
 };
 
 export default CategoriesList;
