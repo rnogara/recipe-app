@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Details from '../components/Details';
 import useFetch from '../hooks/useFetch';
 import Recomendations from '../components/Recomendations';
+import ShareAndFav from './ShareAndFav';
 
 function RecipeDetail() {
   const [recipeRecommended, setRecipeRecommended] = useState([{ name: undefined }]);
@@ -10,7 +11,8 @@ function RecipeDetail() {
     title: undefined,
   });
   const params = useParams();
-  const { location: { pathname } } = useHistory();
+  const { location: { pathname }, push } = useHistory();
+  const URLpath = window.location.href;
   const { id } = params;
   const MEAL_S_ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const COCTAIL_S_ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -49,11 +51,14 @@ function RecipeDetail() {
     const recipeData = pathname.includes('meal') ? { ...detailed.meals[0] }
       : { ...detailed.drinks[0] };
     const payload = {
+      area: recipeData.strArea || '',
+      id: recipeData.idDrink || recipeData.idMeal,
       title: recipeData.strMeal || recipeData.strDrink,
       thumbnail: recipeData.strMealThumb || recipeData.strDrinkThumb,
       instructions: recipeData.strInstructions,
       category: pathname.includes('meals') ? recipeData.strCategory
-        : recipeData.strAlcoholic,
+        : recipeData.strCategory,
+      alcoholicOrNot: recipeData.strAlcoholic || '',
       ingredients: [],
       measurements: [],
       video: recipeData.strYoutube || 'false',
@@ -76,11 +81,12 @@ function RecipeDetail() {
     setRecipeRecommended(getRecommendations(recommendations));
   }, [recommendations]);
 
-  // #### lógica a partir do 28 ###
-  const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || []; // pega do LocalStorage as receitas feitas para o req 29
-  // const storageInProgressRecipes = localStorage.getItem('inProgressRecipes');
+  const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  const btnStartLogic = storageDoneRecipes.some((recipesMade) => recipesMade.id === id);
 
-  // #############################
+  const startBtn = () => (pathname.includes('meal')
+    ? push(`/meals/${id}/in-progress`)
+    : push(`/drinks/${id}/in-progress`));
 
   useEffect(() => {
     fetchingData(recipeType);
@@ -97,15 +103,18 @@ function RecipeDetail() {
       >
         {detailedRecipe.category === undefined ? 'Carregando'
           : <Details payload={ detailedRecipe } />}
+        <ShareAndFav url={ URLpath } recipe={ detailedRecipe } />
         {recipeRecommended.length === 0 ? 'Carregando'
           : <Recomendations payload={ recipeRecommended } />}
       </section>
       <button
         data-testid="start-recipe-btn"
         style={ { position: 'fixed', bottom: '0px' } }
-        hidden={ storageDoneRecipes.some((recipesMade) => recipesMade.id === id) }
+        hidden={ btnStartLogic }
+        onClick={ startBtn }
       >
-        Start Recipe
+        { btnStartLogic ? 'Start Recipe' : 'Continue Recipe' }
+
       </button>
     </div>
   );

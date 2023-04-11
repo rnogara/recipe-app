@@ -12,6 +12,7 @@ function Header() {
 
   const searchIcon = (
     <button
+      data-testid="header-icons"
       onClick={ () => setIsSearchClicked(!isSearchClicked) }
     >
       <img data-testid="search-top-btn" src={ SIcon } alt="Search Icon" />
@@ -21,8 +22,8 @@ function Header() {
     <header>
       <h3>Recipes App</h3>
       <button
+        data-testid="header-icons"
         onClick={ () => history.push('/profile') }
-        src={ PIcon }
       >
         <img data-testid="profile-top-btn" src={ PIcon } alt="Profile Icon" />
       </button>
