@@ -31,23 +31,31 @@ function Ingredients({ recipe, id, title }) {
 
   return (
     <div>
-      {
-        ingredients.map((ingredient, index) => (
-          <label
-            data-testid={ `${index}-ingredient-step` }
-            key={ index }
-            style={ doneSteps[index].done ? style : {} }
-          >
-            <input
-              type="checkbox"
-              value={ index }
-              checked={ doneSteps[index].done }
-              onChange={ handleCheckBox }
-            />
-            {ingredient}
-          </label>
-        ))
-      }
+      <section>
+        {
+          ingredients.map((ingredient, index) => (
+            <label
+              data-testid={ `${index}-ingredient-step` }
+              key={ index }
+              style={ doneSteps[index].done ? style : {} }
+            >
+              <input
+                type="checkbox"
+                value={ index }
+                checked={ doneSteps[index].done }
+                onChange={ handleCheckBox }
+              />
+              {ingredient}
+            </label>
+          ))
+        }
+      </section>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={ doneSteps.some(({ done }) => !done) }
+      >
+        Finalizar receita
+      </button>
     </div>
   );
 }

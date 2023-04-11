@@ -21,8 +21,8 @@ function RecipeInProgressCard({ recipe, id }) {
         { `Category: ${isMealsPage
           ? recipe[lowerTitle][0].strCategory : recipe[lowerTitle][0].strAlcoholic}` }
       </h4>
-      <Ingredients recipe={ recipe[lowerTitle][0] } id={ id } title={ lowerTitle } />
       <p data-testid="instructions">{ recipe[lowerTitle][0].strInstructions }</p>
+      <Ingredients recipe={ recipe[lowerTitle][0] } id={ id } title={ lowerTitle } />
     </section>
   );
 }
