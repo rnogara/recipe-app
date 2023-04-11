@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clipBoardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
+import WHIcon from '../images/whiteHeartIcon.svg';
+import BHIcon from '../images/blackHeartIcon.svg';
 
 function ShareAndFav({ url, recipe }) {
   const [copied, setCopied] = useState(false);
-  console.log(recipe);
+  const [favorite, setFavorite] = useState(false);
 
   const toClipBoard = (path) => {
     clipBoardCopy(path);
@@ -34,7 +36,20 @@ function ShareAndFav({ url, recipe }) {
     } else {
       localStorage.setItem('favoriteRecipes', JSON.stringify([...prevFav, parsed]));
     }
+    if (favorite) {
+      setFavorite(false);
+    } else {
+      setFavorite(true);
+    }
   };
+
+  useEffect(() => {
+    const favLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favLocalStorage) {
+      const isFav = favLocalStorage.some(({ id }) => url.includes(id));
+      setFavorite(isFav);
+    }
+  }, []);
 
   return (
     <>
@@ -45,10 +60,13 @@ function ShareAndFav({ url, recipe }) {
         Compartilhar
       </button>
       <button
-        data-testid="favorite-btn"
         onClick={ () => { favRecipeList(recipe); } }
       >
-        Favoritar
+        <img
+          data-testid="favorite-btn"
+          src={ favorite ? BHIcon : WHIcon }
+          alt="Coração favoritado"
+        />
       </button>
       { copied === false ? false : (
         <span>
