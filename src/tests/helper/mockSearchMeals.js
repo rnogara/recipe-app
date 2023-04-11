@@ -5,11 +5,11 @@ import ingredientOneMealReturn from './apiData/ingredientOneMealReturn';
 import nameMealReturn from './apiData/nameMealReturn';
 import nameOneMealReturn from './apiData/nameOneMealReturn';
 
-const mockFetch = (url) => Promise.resolve({
+const mockSearchMeals = (url) => Promise.resolve({
   status: 200,
   ok: true,
   json: () => {
-    if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=Potato') {
+    if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=potato') {
       return Promise.resolve(nameMealReturn);
     }
 
@@ -37,4 +37,4 @@ const mockFetch = (url) => Promise.resolve({
   },
 });
 
-export default mockFetch;
+export default mockSearchMeals;

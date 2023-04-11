@@ -5,7 +5,7 @@ import ingredientOneDrinkReturn from './apiData/ingredientOneDrinkReturn';
 import nameDrinkReturn from './apiData/nameDrinkReturn';
 import nameOneDrinkReturn from './apiData/nameOneDrinkReturn';
 
-const mockFetch = (url) => Promise.resolve({
+const mockSearchDrinks = (url) => Promise.resolve({
   status: 200,
   ok: true,
   json: () => {
@@ -37,4 +37,4 @@ const mockFetch = (url) => Promise.resolve({
   },
 });
 
-export default mockFetch;
+export default mockSearchDrinks;
