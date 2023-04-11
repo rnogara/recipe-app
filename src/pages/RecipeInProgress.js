@@ -31,10 +31,6 @@ function RecipeInProgress() {
   if (isLoading) return <h1>Loading...</h1>;
   return (
     <section>
-      {/* <button data-testid="share-btn"><img src={ shareIcon } alt="Share" /></button>
-      <button data-testid="favorite-btn">
-        <img src={ whiteHeartIcon } alt="Favorite" />
-      </button> */}
       <ShareAndFav url={ URLpath } recipe={ getDetails(recipe, pathname) } />
       { recipe && (
         <RecipeInProgressCard recipe={ recipe } id={ id } />

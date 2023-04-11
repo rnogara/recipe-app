@@ -10,7 +10,7 @@ function Ingredients({ recipe, id, title }) {
   const ingredients = Object.entries(recipe)
     .filter(([ingredientIndex, ingredient]) => ingredientIndex
       .includes('Ingredient') && ingredient)
-    .map((eachIngredient, i) => `${ingrendientsQuantity[i]} ${eachIngredient[1]}`);
+    .map((eachIngredient, i) => `${ingrendientsQuantity[i] || ''} ${eachIngredient[1]}`);
   const ingredientsToLocalStorage = ingredients
     .reduce((acc, ingredient) => [...acc, { ingredient, done: false }], []);
   const defaultDoneSteps = currentIngredientsInProgress || ingredientsToLocalStorage;

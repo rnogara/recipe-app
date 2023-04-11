@@ -15,7 +15,7 @@ function RecipeInProgressCard({ recipe, id }) {
       <img
         data-testid="recipe-photo"
         src={ recipe[lowerTitle][0][`str${actualPage}Thumb`] }
-        alt=""
+        alt={ `${lowerTitle} recipe` }
       />
       <h4 data-testid="recipe-category">
         { `Category: ${isMealsPage

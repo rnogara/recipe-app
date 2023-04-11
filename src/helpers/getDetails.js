@@ -1,5 +1,5 @@
 export const getDetails = (detailed, pathname) => {
-  const detail = detailed || { meals: [], drinks: [] };
+  const detail = detailed || { meals: [{}], drinks: [{}] };
   const ingredientsRange = 20;
   const ing = 'strIngredient';
   const meas = 'strMeasure';
