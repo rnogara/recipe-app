@@ -3,6 +3,7 @@ import clipBoardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import WHIcon from '../images/whiteHeartIcon.svg';
 import BHIcon from '../images/blackHeartIcon.svg';
+import ShareIcon from '../images/shareIcon.svg';
 
 function ShareAndFav({ url, recipe }) {
   const [copied, setCopied] = useState(false);
@@ -36,11 +37,7 @@ function ShareAndFav({ url, recipe }) {
     } else {
       localStorage.setItem('favoriteRecipes', JSON.stringify([...prevFav, parsed]));
     }
-    if (favorite) {
-      setFavorite(false);
-    } else {
-      setFavorite(true);
-    }
+    setFavorite(!favorite);
   };
 
   useEffect(() => {
@@ -57,7 +54,11 @@ function ShareAndFav({ url, recipe }) {
         data-testid="share-btn"
         onClick={ () => { toClipBoard(url); } }
       >
-        Compartilhar
+        <img
+          data-testid="favorite-btn"
+          src={ ShareIcon }
+          alt="Share Icon"
+        />
       </button>
       <button
         onClick={ () => { favRecipeList(recipe); } }
@@ -65,7 +66,7 @@ function ShareAndFav({ url, recipe }) {
         <img
           data-testid="favorite-btn"
           src={ favorite ? BHIcon : WHIcon }
-          alt="Coração favoritado"
+          alt="Favorite Icon"
         />
       </button>
       { copied === false ? false : (
