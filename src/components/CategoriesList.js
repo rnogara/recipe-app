@@ -11,11 +11,9 @@ function CategoriesList({ title, fetchRecipes }) {
     { [lowerTitle]: [] },
   );
   const [toggles, setToggles] = useState({});
-  // console.log(categories);
 
   useEffect(() => {
     fetchCategories(URL_CATEGORIES);
-    console.log('entrou');
   }, [title]);
 
   useEffect(() => {

@@ -5,15 +5,15 @@ import DrinkIcon from '../images/drinkIcon.svg';
 
 function Footer() {
   const { push } = useHistory();
-  const clickMeals = (end) => {
+  const redirect = (end) => {
     push(`/${end}`);
   };
   return (
     <section data-testid="footer" style={ { position: 'fixed', bottom: '0px' } }>
-      <button onClick={ () => clickMeals('meals') }>
+      <button onClick={ () => redirect('meals') }>
         <img src={ MealIcon } alt="Meal" data-testid="meals-bottom-btn" />
       </button>
-      <button onClick={ () => clickMeals('drinks') }>
+      <button onClick={ () => redirect('drinks') }>
         <img src={ DrinkIcon } alt="Drink" data-testid="drinks-bottom-btn" />
       </button>
     </section>
