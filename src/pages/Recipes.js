@@ -6,6 +6,7 @@ import useRecipes from '../hooks/useRecipes';
 import { AppContext } from '../context/AppProvider';
 import Header from '../components/Header';
 import CategoriesList from '../components/CategoriesList';
+import Footer from '../components/Footer';
 
 function Recipes({ title }) {
   const { functions } = useContext(AppContext);
@@ -15,7 +16,7 @@ function Recipes({ title }) {
   useEffect(() => {
     fetchRecipes(URL_API);
     functions.setTitle(title);
-  }, []);
+  }, [title]);
 
   useEffect(() => {
     functions[`set${title}`](recipes[title.toLowerCase()]);
@@ -42,6 +43,7 @@ function Recipes({ title }) {
           })
         }
       </section>
+      <Footer />
     </div>
   );
 }

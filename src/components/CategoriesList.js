@@ -14,7 +14,7 @@ function CategoriesList({ title, fetchRecipes }) {
 
   useEffect(() => {
     fetchCategories(URL_CATEGORIES);
-  }, []);
+  }, [title]);
 
   useEffect(() => {
     setToggles(categories[lowerTitle]
@@ -34,7 +34,7 @@ function CategoriesList({ title, fetchRecipes }) {
     setToggles({ ...allToggles, [innerText]: !toggles[innerText] });
   };
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading || !categories[lowerTitle]) return <h1>Loading...</h1>;
 
   return (
     <section>
