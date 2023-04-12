@@ -8,6 +8,8 @@ export function AppProvider({ children }) {
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [title, setTitle] = useState('');
+  const [favoriteRecipes, setFavoriteRecipes] = useState(JSON
+    .parse(localStorage.getItem('favoriteRecipes')) || []);
   const state = useMemo(() => ({
     user: {
       email,
@@ -21,11 +23,14 @@ export function AppProvider({ children }) {
       setDrinks,
       setMeals,
       setTitle,
+      setFavoriteRecipes,
     },
     helpers: {
       title,
     },
-  }), [email, title, drinks, meals, setEmail, setTitle, setDrinks, setMeals]);
+    favoriteRecipes,
+  }), [email, title, drinks, meals, setEmail,
+    setTitle, setDrinks, setMeals, favoriteRecipes]);
   return (
     <AppContext.Provider value={ state }>
       { children }

@@ -6,8 +6,11 @@ import BHIcon from '../images/blackHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
 
 function ShareAndFav({ url, recipe }) {
+  const favoriteOnLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   const [copied, setCopied] = useState(false);
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(
+    favoriteOnLocal.some(({ id }) => recipe.id === id),
+  );
 
   const toClipBoard = (path) => {
     clipBoardCopy(path);
@@ -81,6 +84,7 @@ ShareAndFav.propTypes = {
   url: PropTypes.string.isRequired,
   recipe: PropTypes.shape({
     title: PropTypes.string,
+    id: PropTypes.string,
     thumbnail: PropTypes.string,
     category: PropTypes.string,
     ingredients: PropTypes.arrayOf(PropTypes.string),
