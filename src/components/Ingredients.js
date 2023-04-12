@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import convertToDoneRecipe from '../helpers/convertToDoneRecipe';
 
 function Ingredients({ recipe, id, title }) {
+  const { push } = useHistory();
   const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   const currentIngredientsInProgress = recipesInProgress[title][id];
   const ingrendientsQuantity = Object.entries(recipe)
     .filter(([measureKey, measure]) => measureKey.includes('Measure') && measure)
@@ -27,6 +31,16 @@ function Ingredients({ recipe, id, title }) {
     return mapedSteps;
   });
 
+  const saveAndRedirect = (recipeToSave) => {
+    const convertedRecipe = convertToDoneRecipe(recipeToSave);
+    const savedOnLocalStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    localStorage.setItem(
+      'doneRecipes',
+      JSON.stringify([...savedOnLocalStorage, convertedRecipe]),
+    );
+    push('/done-recipes');
+  };
+
   const style = { textDecoration: 'line-through solid rgb(0, 0, 0)' };
 
   return (
@@ -42,7 +56,8 @@ function Ingredients({ recipe, id, title }) {
               <input
                 type="checkbox"
                 value={ index }
-                checked={ doneSteps[index].done }
+                checked={ doneSteps[index].done || doneRecipes
+                  .some((doneRecipe) => doneRecipe.id === id) }
                 onChange={ handleCheckBox }
               />
               {ingredient}
@@ -53,8 +68,9 @@ function Ingredients({ recipe, id, title }) {
       <button
         data-testid="finish-recipe-btn"
         disabled={ doneSteps.some(({ done }) => !done) }
+        onClick={ () => saveAndRedirect(recipe) }
       >
-        Finalizar receita
+        Finish Recipe
       </button>
     </div>
   );
