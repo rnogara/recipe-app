@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import { AppContext } from '../context/AppProvider';
+import Footer from '../components/Footer';
 
 function Profile() {
   const { functions: { setTitle } } = useContext(AppContext);
@@ -45,7 +46,7 @@ function Profile() {
       >
         Logout
       </button>
-
+      <Footer />
     </section>
   );
 }
