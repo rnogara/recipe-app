@@ -11,8 +11,6 @@ function DoneRecipes() {
   const render = filterState === 'all' ? doneRecipes
     : doneRecipes.filter((recipe) => recipe.type === filterState);
 
-  console.log(doneRecipes);
-
   useEffect(() => {
     setTitle('Done Recipes');
   }, []);

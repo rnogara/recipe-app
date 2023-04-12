@@ -7,21 +7,21 @@ function FilterBtnRow({ filterState }) {
       <button
         data-testid="filter-by-all-btn"
         name="all"
-        onClick={ () => { filterState('all'); } }
+        onClick={ ({ target: { name } }) => { filterState(name); } }
       >
         All
       </button>
       <button
         data-testid="filter-by-meal-btn"
-        name="meals"
-        onClick={ () => { filterState('meals'); } }
+        name="meal"
+        onClick={ ({ target: { name } }) => { filterState(name); } }
       >
         Meals
       </button>
       <button
         data-testid="filter-by-drink-btn"
-        name="drinks"
-        onClick={ () => { filterState('drinks'); } }
+        name="drink"
+        onClick={ ({ target: { name } }) => { filterState(name); } }
       >
         Drinks
       </button>

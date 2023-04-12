@@ -1,26 +1,42 @@
 import React, { useState } from 'react';
 import clipBoardCopy from 'clipboard-copy';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipeCard({ recipe, index }) {
-  const { name, doneDate, category, image, nationality, alcoholicOrNot, tags } = recipe;
+  const history = useHistory();
+  const { name, doneDate, category, image, nationality,
+    alcoholicOrNot, tags, type, id } = recipe;
   const [copied, setCopied] = useState(false);
   const hasTag = tags.sort((a, b) => a - b) || [];
   console.log(recipe);
 
   const toClipBoard = (path) => {
-    clipBoardCopy(path);
+    const newPath = `${path}/${type}s/${id}`;
+    clipBoardCopy(newPath);
     setCopied(true);
+  };
+
+  const sizeStyle = {
+    maxWidth: '120px',
+    maxHeight: '120px',
   };
 
   return (
     <div>
-      <img
-        data-testid={ `${index}-horizontal-image` }
-        src={ image }
-        alt={ `Foto de ${name}` }
-      />
+      <div
+        role="presentation"
+        onClick={ () => { history.push(`/${type}s/${id}`); } }
+      >
+        <img
+          data-testid={ `${index}-horizontal-image` }
+          src={ image }
+          alt={ `Foto de ${name}` }
+          style={ sizeStyle }
+        />
+        <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
+      </div>
       { nationality
       && (
         <p
@@ -35,10 +51,9 @@ function DoneRecipeCard({ recipe, index }) {
           { alcoholicOrNot }
         </p>
       )}
-      <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
       <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
       <button
-        onClick={ () => { toClipBoard(window.location.href); } }
+        onClick={ () => { toClipBoard(window.location.origin); } }
       >
         <img
           src={ shareIcon }
