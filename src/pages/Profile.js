@@ -10,8 +10,10 @@ function Profile() {
 
   useEffect(() => {
     setTitle('Profile');
-    const { email } = JSON.parse(localStorage.getItem('user'));
-    setEmailState(email);
+    if (localStorage.getItem('user')) {
+      const { email } = JSON.parse(localStorage.getItem('user'));
+      setEmailState(email);
+    }
   }, []);
 
   const redirector = (end) => {
