@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import { AppContext } from '../context/AppProvider';
-import { useHistory } from 'react-router-dom';
 
 function Profile() {
   const { functions: { setTitle } } = useContext(AppContext);
