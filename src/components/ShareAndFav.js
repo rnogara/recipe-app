@@ -55,7 +55,6 @@ function ShareAndFav({ url, recipe }) {
         onClick={ () => { toClipBoard(url); } }
       >
         <img
-          data-testid="favorite-btn"
           src={ ShareIcon }
           alt="Share Icon"
         />

@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Details from '../components/Details';
 import useFetch from '../hooks/useFetch';
 import Recomendations from '../components/Recomendations';
-import ShareAndFav from './ShareAndFav';
+import ShareAndFav from '../components/ShareAndFav';
 
 function RecipeDetail() {
   const [recipeRecommended, setRecipeRecommended] = useState([{ name: undefined }]);
