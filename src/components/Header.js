@@ -1,9 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import SearchBar from './SearchBar';
-import SIcon from '../images/searchIcon.svg';
-import PIcon from '../images/profileIcon.svg';
+import SIcon from '../images/icone pesquiar.png';
+import PIcon from '../images/icone-perfil.png';
 import { AppContext } from '../context/AppProvider';
+import logo from '../images/food.png';
+import foodIcon from '../images/icone-prato.png';
+import drinkIcon from '../images/icone-bebida.png';
+import '../styles/Header.css';
 
 function Header() {
   const [isSearchClicked, setIsSearchClicked] = useState(false);
@@ -12,23 +16,45 @@ function Header() {
 
   const searchIcon = (
     <button
+      className="header-btn"
       data-testid="header-icons"
       onClick={ () => setIsSearchClicked(!isSearchClicked) }
     >
-      <img data-testid="search-top-btn" src={ SIcon } alt="Search Icon" />
+      <img
+        className="header-icon"
+        data-testid="search-top-btn"
+        src={ SIcon }
+        alt="Search Icon"
+      />
     </button>
   );
   return (
-    <header>
-      <h3>Recipes App</h3>
-      <button
-        data-testid="header-icons"
-        onClick={ () => history.push('/profile') }
-      >
-        <img data-testid="profile-top-btn" src={ PIcon } alt="Profile Icon" />
-      </button>
-      { (title === 'Meals' || title === 'Drinks') && searchIcon }
-      <h1 data-testid="page-title">{ title }</h1>
+    <header className="header-wrapper">
+      <div className="header-container">
+        <div className="header-logo">
+          <img className="header-logo-img" src={ logo } alt="logo" />
+          <h3 className="header-logo-name">Recipe App</h3>
+        </div>
+        { (title === 'Meals' || title === 'Drinks') && searchIcon }
+        <button
+          className="header-btn"
+          data-testid="header-icons"
+          onClick={ () => history.push('/profile') }
+        >
+          <img
+            className="header-icon"
+            data-testid="profile-top-btn"
+            src={ PIcon }
+            alt="Profile Icon"
+          />
+        </button>
+      </div>
+      <img
+        className="page-icon"
+        src={ title === 'Meals' ? foodIcon : drinkIcon }
+        alt="Icone da página"
+      />
+      <h1 className="page-title" data-testid="page-title">{ title }</h1>
       { isSearchClicked && <SearchBar /> }
     </header>
   );
