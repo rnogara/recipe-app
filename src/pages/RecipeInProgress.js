@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import { useLocation, useParams } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
-// import shareIcon from '../images/shareIcon.svg';
-// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import RecipeInProgressCard from '../components/RecipeInProgressCard';
 import ShareAndFav from '../components/ShareAndFav';
 import { getDetails } from '../helpers/getDetails';
@@ -35,7 +32,6 @@ function RecipeInProgress() {
       { recipe && (
         <RecipeInProgressCard recipe={ recipe } id={ id } />
       )}
-      <button data-testid="finish-recipe-btn">Finalizar receita</button>
     </section>
   );
 }
