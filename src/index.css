@@ -1,13 +1,12 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Sacramento&display=swap');
+
+:root {
+  --primary-color: #e2f1b1;
+  --secondary-color: #BC4749;
+  --tertiary-color: #32A287;
+  --quaternary-color: #13262F;
+  --quintenary-color: #F79D5C;
+  --logo-name: 'Sacramento', cursive;
+  --title-font: 'Indie Flower', cursive
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}

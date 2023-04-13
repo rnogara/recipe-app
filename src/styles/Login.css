@@ -1,0 +1,29 @@
+@keyframes background {
+
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body {
+  /* background-color: var(--primary-color); */
+}
+
+.login-wrapper {
+  align-items: center;
+  animation: background 6s ease infinite;
+  background: linear-gradient(45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background-size: 200% 200%;
+  display: flex;
+  flex-direction: column;
+  height: 640px;
+  width: 360px;
+}

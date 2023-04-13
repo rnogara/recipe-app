@@ -13,11 +13,11 @@ const mockSearchDrinks = (url) => Promise.resolve({
       return Promise.resolve(nameDrinkReturn);
     }
 
-    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=Bloody%20Mary') {
+    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=Bloody Mary') {
       return Promise.resolve(nameOneDrinkReturn);
     }
 
-    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a') {
+    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=i') {
       return Promise.resolve(firstLetterDrinkReturn);
     }
 

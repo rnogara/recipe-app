@@ -23,7 +23,9 @@ function Profile() {
   };
 
   return (
-    <section>
+    <section
+      className="profile-container"
+    >
       <Header />
       <h3 data-testid="profile-email">
         { emailState }

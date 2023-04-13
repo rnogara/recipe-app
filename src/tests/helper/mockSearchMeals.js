@@ -29,7 +29,7 @@ const mockSearchMeals = (url) => Promise.resolve({
       return Promise.resolve(ingredientMealReturn);
     }
 
-    if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?i=Brussels%20Sprouts') {
+    if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?i=brussels sprouts') {
       return Promise.resolve(ingredientOneMealReturn);
     }
 

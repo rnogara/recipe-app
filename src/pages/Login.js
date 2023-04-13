@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppProvider';
+import '../styles/Login.css';
 
 function Login() {
   const [componentEmail, setComponentEmail] = useState('');
@@ -29,7 +30,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="login-wrapper">
       <form
         onSubmit={ handleSubmit }
       >
