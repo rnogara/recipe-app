@@ -1,5 +1,6 @@
 body {
   height: 640px;
   margin: 0;
+  overflow: scroll;
   width: 360px;
 }
