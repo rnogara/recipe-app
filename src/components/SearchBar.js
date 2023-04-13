@@ -67,47 +67,59 @@ function SearchBar() {
   };
 
   return (
-    <section>
+    <section className="search-bar-wrapper">
       <div>
         <input
+          className="search-input"
           type="text"
           placeholder="Digite sua pesquisa"
           data-testid="search-input"
           value={ searchText }
           onChange={ ({ target }) => setSearchText(target.value) }
         />
-        <label htmlFor="ingredients">
-          Ingredientes
-          <input
-            value="ingredient"
-            type="radio"
-            name="option"
-            data-testid="ingredient-search-radio"
-            onClick={ ({ target }) => setOption(target.value) }
-          />
-        </label>
-        <label htmlFor="name">
-          Nome
-          <input
-            value="name"
-            type="radio"
-            name="option"
-            data-testid="name-search-radio"
-            onClick={ ({ target }) => setOption(target.value) }
-          />
-        </label>
-        <label htmlFor="first-letter">
-          Primeira Letra
-          <input
-            value="first-letter"
-            type="radio"
-            name="option"
-            data-testid="first-letter-search-radio"
-            onClick={ ({ target }) => setOption(target.value) }
-          />
-        </label>
+        <div className="search-radio-wrapper">
+          <label className="search-label" htmlFor="ingredients">
+            Ingredientes
+            <input
+              className="search-radio-btn"
+              value="ingredient"
+              type="radio"
+              name="option"
+              data-testid="ingredient-search-radio"
+              onClick={ ({ target }) => setOption(target.value) }
+            />
+          </label>
+          <label className="search-label" htmlFor="name">
+            Nome
+            <input
+              className="search-radio-btn"
+              value="name"
+              type="radio"
+              name="option"
+              data-testid="name-search-radio"
+              onClick={ ({ target }) => setOption(target.value) }
+            />
+          </label>
+          <label className="search-label" htmlFor="first-letter">
+            Primeira Letra
+            <input
+              className="search-radio-btn"
+              value="first-letter"
+              type="radio"
+              name="option"
+              data-testid="first-letter-search-radio"
+              onClick={ ({ target }) => setOption(target.value) }
+            />
+          </label>
+        </div>
       </div>
-      <button data-testid="exec-search-btn" onClick={ handleSearchBtn }>Search</button>
+      <button
+        className="search-btn"
+        data-testid="exec-search-btn"
+        onClick={ handleSearchBtn }
+      >
+        Search
+      </button>
     </section>
   );
 }
