@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import clipBoardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
-import WHIcon from '../images/whiteHeartIcon.svg';
 import BHIcon from '../images/blackHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
 import { AppContext } from '../context/AppProvider';
 
-function ShareAndFav({ url, recipe }) {
+function ShareAndFavHorizontal({ url, recipe, index }) {
   const { functions: { setFavoriteRecipes }, favoriteRecipes } = useContext(AppContext);
   const [copied, setCopied] = useState(false);
   const [favorite, setFavorite] = useState(
@@ -57,10 +56,10 @@ function ShareAndFav({ url, recipe }) {
   return (
     <>
       <button
-        data-testid="share-btn"
         onClick={ () => { toClipBoard(url); } }
       >
         <img
+          data-testid={ `${index}-horizontal-share-btn` }
           src={ ShareIcon }
           alt="Share Icon"
         />
@@ -69,8 +68,8 @@ function ShareAndFav({ url, recipe }) {
         onClick={ () => { favRecipeList(recipe); } }
       >
         <img
-          data-testid="favorite-btn"
-          src={ favorite ? BHIcon : WHIcon }
+          data-testid={ `${index}-horizontal-favorite-btn` }
+          src={ BHIcon }
           alt="Favorite Icon"
         />
       </button>
@@ -83,8 +82,9 @@ function ShareAndFav({ url, recipe }) {
   );
 }
 
-ShareAndFav.propTypes = {
+ShareAndFavHorizontal.propTypes = {
   url: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
     title: PropTypes.string,
     id: PropTypes.string,
@@ -98,4 +98,4 @@ ShareAndFav.propTypes = {
   }).isRequired,
 };
 
-export default ShareAndFav;
+export default ShareAndFavHorizontal;
