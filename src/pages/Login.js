@@ -32,25 +32,34 @@ function Login() {
 
   return (
     <div className="login-wrapper">
-      <img src={ logo } alt="logo" />
+      <div className="logo-wrapper">
+        <img className="logo-login" src={ logo } alt="logo" />
+        <h3 className="logo-name">Recipe App</h3>
+      </div>
       <form
+        className="login-form-wrapper"
         onSubmit={ handleSubmit }
       >
         <input
+          className="login-input"
           type="email"
+          placeholder="Email"
           data-testid="email-input"
           name="email"
           value={ componentEmail }
           onChange={ ({ target }) => setComponentEmail(target.value) }
         />
         <input
+          className="login-input"
           type="password"
+          placeholder="Password"
           data-testid="password-input"
           name="password"
           value={ password }
           onChange={ ({ target }) => setPassword(target.value) }
         />
         <button
+          className="login-button"
           data-testid="login-submit-btn"
           disabled={ isDisabled }
         >
