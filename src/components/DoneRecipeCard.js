@@ -10,7 +10,6 @@ function DoneRecipeCard({ recipe, index }) {
     alcoholicOrNot, tags, type, id } = recipe;
   const [copied, setCopied] = useState(false);
   const hasTag = tags.sort((a, b) => a - b) || [];
-  console.log(recipe);
 
   const toClipBoard = (path) => {
     const newPath = `${path}/${type}s/${id}`;
