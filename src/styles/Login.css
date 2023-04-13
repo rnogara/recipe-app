@@ -13,10 +13,6 @@
   }
 }
 
-body {
-  /* background-color: var(--primary-color); */
-}
-
 .login-wrapper {
   align-items: center;
   animation: background 6s ease infinite;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppProvider';
+import logo from '../images/food.png';
 import '../styles/Login.css';
 
 function Login() {
@@ -31,6 +32,7 @@ function Login() {
 
   return (
     <div className="login-wrapper">
+      <img src={ logo } alt="logo" />
       <form
         onSubmit={ handleSubmit }
       >
