@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
+import Check from '../images/Check.png';
+import Favorites from '../images/Favorites.png';
+import Logout from '../images/Logout.png';
 import { AppContext } from '../context/AppProvider';
 import Footer from '../components/Footer';
+import '../styles/Profile.css';
 
 function Profile() {
   const { functions: { setTitle } } = useContext(AppContext);
@@ -24,30 +28,40 @@ function Profile() {
 
   return (
     <section
-      className="profile-container"
+      className="profile-wrapper"
     >
       <Header />
-      <h3 data-testid="profile-email">
-        { emailState }
-      </h3>
-      <button
-        data-testid="profile-done-btn"
-        onClick={ () => redirector('done-recipes') }
+      <div className="profile-title">
+        <p>{ emailState }</p>
+      </div>
+      <section
+        className="profile-btn-wrapper"
       >
-        Done Recipes
-      </button>
-      <button
-        data-testid="profile-favorite-btn"
-        onClick={ () => redirector('favorite-recipes') }
-      >
-        Favorite Recipes
-      </button>
-      <button
-        data-testid="profile-logout-btn"
-        onClick={ () => redirector('') }
-      >
-        Logout
-      </button>
+        <button
+          className="profile-btn align-img-text"
+          data-testid="profile-done-btn"
+          onClick={ () => redirector('done-recipes') }
+        >
+          <img src={ Check } alt="done-check icon" />
+          <span>Done Recipes</span>
+        </button>
+        <button
+          className="profile-btn fav align-img-text"
+          data-testid="profile-favorite-btn"
+          onClick={ () => redirector('favorite-recipes') }
+        >
+          <img src={ Favorites } alt="favorite icon" />
+          <span>Favorite Recipes</span>
+        </button>
+        <button
+          className="profile-btn align-img-text"
+          data-testid="profile-logout-btn"
+          onClick={ () => redirector('') }
+        >
+          <img src={ Logout } alt="logout icon" />
+          <span>Logout</span>
+        </button>
+      </section>
       <Footer />
     </section>
   );

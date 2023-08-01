@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 function RecipeCardMeals({ recipe: { strMeal, strMealThumb, idMeal }, index }) {
   return (
     <Link to={ `/meals/${idMeal}` }>
-      <section data-testid={ `${index}-recipe-card` }>
-        <img
-          src={ strMealThumb }
-          alt={ strMeal }
-          data-testid={ `${index}-card-img` }
-        />
+      <section data-testid={ `${index}-recipe-card` } className="recipe-card">
+        <div>
+          <img
+            src={ strMealThumb }
+            alt={ strMeal }
+            data-testid={ `${index}-card-img` }
+          />
+        </div>
         <h4 data-testid={ `${index}-card-name` }>{ strMeal }</h4>
       </section>
     </Link>

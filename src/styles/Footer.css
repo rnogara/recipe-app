@@ -1,0 +1,16 @@
+.footer-wraper {
+  background: #13262f;
+  bottom: 0;
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+}
+
+.footer-btn-redirect {
+  background-color: transparent;
+  border: none;
+  margin-left: 2%;
+  margin-right: 2%;
+}

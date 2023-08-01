@@ -4,6 +4,7 @@ import Details from '../components/Details';
 import useFetch from '../hooks/useFetch';
 import Recomendations from '../components/Recomendations';
 import ShareAndFav from '../components/ShareAndFav';
+import '../styles/RecipeInProgress.css';
 
 function RecipeDetail() {
   const [recipeRecommended, setRecipeRecommended] = useState([{ name: undefined }]);
@@ -83,6 +84,10 @@ function RecipeDetail() {
 
   const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   const btnStartLogic = storageDoneRecipes.some((recipesMade) => recipesMade.id === id);
+  const mealOrDrink = pathname.includes('meal') ? 'meals' : 'drinks';
+  const inProgressRecipes = JSON
+    .parse(localStorage.getItem('inProgressRecipes')) || { meals: {}, drinks: {} };
+  const isRecipeStarted = inProgressRecipes[mealOrDrink][id];
 
   const startBtn = () => (pathname.includes('meal')
     ? push(`/meals/${id}/in-progress`)
@@ -109,11 +114,12 @@ function RecipeDetail() {
       </section>
       <button
         data-testid="start-recipe-btn"
+        className="fixed-btn-pos"
         style={ { position: 'fixed', bottom: '0px' } }
         hidden={ btnStartLogic }
         onClick={ startBtn }
       >
-        { btnStartLogic ? 'Start Recipe' : 'Continue Recipe' }
+        { !isRecipeStarted ? 'Start Recipe' : 'Continue Recipe' }
 
       </button>
     </div>

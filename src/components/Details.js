@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Iframe from './Iframe';
+import foodIcon from '../images/FoodIcon.png';
+import drinkIcon from '../images/DrinkIcon.png';
 
 function Details({ payload }) {
   const toSlice = 32;
@@ -14,29 +16,45 @@ function Details({ payload }) {
     instructions,
     video,
   } = payload;
+  const bannerBG = { backgroundImage:
+    `url(${thumbnail})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  };
   return (
     <>
-      <h1
-        data-testid="recipe-title"
+
+      <div
+        className="image-background"
+        style={ bannerBG }
       >
-        { title }
-      </h1>
-      <img
-        data-testid="recipe-photo"
-        src={ thumbnail }
-        alt={ title }
-      />
-      <h3
-        data-testid="recipe-category"
+        <div
+          className="category-title"
+        >
+          <img src={ video === 'false' ? drinkIcon : foodIcon } alt="recipe icon" />
+          <h4
+            className="category-title"
+            data-testid="recipe-category"
+          >
+            { alcoholicOrNot === '' ? category : category }
+          </h4>
+        </div>
+        <h1
+          data-testid="recipe-title"
+          className="progress-title"
+        >
+          { title }
+        </h1>
+      </div>
+
+      <h4
+        className="margin-text"
       >
-        Category :
-        {' '}
-        { alcoholicOrNot === '' ? category : alcoholicOrNot }
-      </h3>
-      <h4>
         Ingredients
       </h4>
-      <ul>
+      <ul
+        className="subsection"
+      >
         {ingredients.map((ing, index) => ((
           <li
             key={ `${ing}${index}` }
@@ -45,11 +63,14 @@ function Details({ payload }) {
             {`${measurements[index] || ''} ${ing || ''}`}
           </li>)))}
       </ul>
-      <h4>
+      <h4
+        className="margin-text"
+      >
         Instructions
       </h4>
       <p
         data-testid="instructions"
+        className="subsection"
       >
         { instructions }
       </p>

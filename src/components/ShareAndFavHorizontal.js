@@ -54,9 +54,10 @@ function ShareAndFavHorizontal({ url, recipe, index }) {
   }, []);
 
   return (
-    <>
+    <div className="share-fav-container">
       <button
         onClick={ () => { toClipBoard(url); } }
+        className="favorite-card-button"
       >
         <img
           data-testid={ `${index}-horizontal-share-btn` }
@@ -66,6 +67,7 @@ function ShareAndFavHorizontal({ url, recipe, index }) {
       </button>
       <button
         onClick={ () => { favRecipeList(recipe); } }
+        className="favorite-card-button"
       >
         <img
           data-testid={ `${index}-horizontal-favorite-btn` }
@@ -78,7 +80,7 @@ function ShareAndFavHorizontal({ url, recipe, index }) {
           Link copied!
         </span>
       )}
-    </>
+    </div>
   );
 }
 

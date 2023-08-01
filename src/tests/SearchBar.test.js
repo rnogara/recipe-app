@@ -369,7 +369,6 @@ describe('Testa o componente SearchBar', () => {
       const drinkName = screen.getByText('410 Gone');
       expect(drinkName).toBeInTheDocument();
     });
-
   });
   it('Testa se ao pesquisar por primeira letra com dois caracteres ele envia o alerta', async () => {
     renderWithRouter(<AppProvider><Recipes title="Meals" /></AppProvider>);

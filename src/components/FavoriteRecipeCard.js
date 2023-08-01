@@ -7,12 +7,7 @@ function FavoriteRecipeCard({ recipe, index }) {
   const { type, id, name, image, category, nationality, alcoholicOrNot } = recipe;
   const { push } = useHistory();
   return (
-    <section>
-      <ShareAndFavHorizontal
-        recipe={ recipe }
-        url={ `${window.location.origin}/${type}s/${id}` }
-        index={ index }
-      />
+    <section className="favorite-recipe-card">
       <div
         role="presentation"
         onClick={ () => push(`/${type}s/${id}`) }
@@ -21,13 +16,19 @@ function FavoriteRecipeCard({ recipe, index }) {
           data-testid={ `${index}-horizontal-image` }
           alt={ `${name} ${type}` }
           src={ image }
-          style={ { maxWidth: '140px' } }
         />
-        <h3 data-testid={ `${index}-horizontal-name` }>{ name }</h3>
-        <p data-testid={ `${index}-horizontal-top-text` }>
-          { !alcoholicOrNot ? `${nationality} - ${category}` : alcoholicOrNot }
-        </p>
+        <div className="text-container-card">
+          <h3 data-testid={ `${index}-horizontal-name` }>{ name }</h3>
+          <p data-testid={ `${index}-horizontal-top-text` }>
+            { !alcoholicOrNot ? `${nationality} - ${category}` : alcoholicOrNot }
+          </p>
+        </div>
       </div>
+      <ShareAndFavHorizontal
+        recipe={ recipe }
+        url={ `${window.location.origin}/${type}s/${id}` }
+        index={ index }
+      />
     </section>
   );
 }

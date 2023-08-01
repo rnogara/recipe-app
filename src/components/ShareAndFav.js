@@ -55,8 +55,9 @@ function ShareAndFav({ url, recipe }) {
   }, []);
 
   return (
-    <>
+    <div className="s-f-container">
       <button
+        className="s-f-button"
         data-testid="share-btn"
         onClick={ () => { toClipBoard(url); } }
       >
@@ -66,6 +67,7 @@ function ShareAndFav({ url, recipe }) {
         />
       </button>
       <button
+        className="s-f-button"
         onClick={ () => { favRecipeList(recipe); } }
       >
         <img
@@ -79,7 +81,7 @@ function ShareAndFav({ url, recipe }) {
           Link copied!
         </span>
       )}
-    </>
+    </div>
   );
 }
 
