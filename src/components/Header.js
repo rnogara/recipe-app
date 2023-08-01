@@ -5,8 +5,9 @@ import SIcon from '../images/icone pesquiar.png';
 import PIcon from '../images/icone-perfil.png';
 import { AppContext } from '../context/AppProvider';
 import logo from '../images/food.png';
-import foodIcon from '../images/icone-prato.png';
-import drinkIcon from '../images/icone-bebida.png';
+// import foodIcon from '../images/icone-prato.png';
+// import drinkIcon from '../images/icone-bebida.png';
+import headerIcons from '../helpers/headerIcons';
 import '../styles/Header.css';
 
 function Header() {
@@ -51,7 +52,7 @@ function Header() {
       </div>
       <img
         className="page-icon"
-        src={ title === 'Meals' ? foodIcon : drinkIcon }
+        src={ headerIcons[title.split(' ')[0]] }
         alt="Icone da página"
       />
       <h1 className="page-title" data-testid="page-title">{ title }</h1>

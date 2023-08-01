@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import { AppContext } from '../context/AppProvider';
 import FilterBtnRow from '../components/FilterBtnRow';
 import FavoriteRecipeCard from '../components/FavoriteRecipeCard';
+import '../styles/FavoriteRecipes.css';
 
 function FavoriteRecipes() {
   const { functions: { setTitle }, favoriteRecipes } = useContext(AppContext);
@@ -15,14 +16,18 @@ function FavoriteRecipes() {
   }, []);
 
   return (
-    <section>
+    <section className="favorites-page">
       <Header />
       <FilterBtnRow filterState={ setFilter } />
-      {
-        filteredRecipes.map((favoriteRecipe, index) => (
-          <FavoriteRecipeCard recipe={ favoriteRecipe } index={ index } key={ index } />
-        ))
-      }
+      <ul className="favorite-recipes-list">
+        {
+          filteredRecipes.map((favoriteRecipe, index) => (
+            <li key={ index }>
+              <FavoriteRecipeCard recipe={ favoriteRecipe } index={ index } />
+            </li>
+          ))
+        }
+      </ul>
     </section>
   );
 }

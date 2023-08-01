@@ -7,6 +7,7 @@ import { AppContext } from '../context/AppProvider';
 import Header from '../components/Header';
 import CategoriesList from '../components/CategoriesList';
 import Footer from '../components/Footer';
+import '../styles/Recipes.css';
 
 function Recipes({ title }) {
   const { functions } = useContext(AppContext);
@@ -23,10 +24,12 @@ function Recipes({ title }) {
   }, [recipes]);
 
   return (
-    <div className="recipes-list">
+    <div className="recipes-page">
       <Header />
-      <CategoriesList title={ title } fetchRecipes={ fetchRecipes } />
-      <section>
+      {
+        !isLoading && <CategoriesList title={ title } fetchRecipes={ fetchRecipes } />
+      }
+      <section className="recipes-list">
         {
           isLoading ? <h1>Loading...</h1> : recipesResponse.map((recipe, index) => {
             const indexLimit = 12;

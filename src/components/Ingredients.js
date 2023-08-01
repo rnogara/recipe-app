@@ -45,27 +45,39 @@ function Ingredients({ recipe, id, title }) {
 
   return (
     <div>
-      <section>
-        {
-          ingredients.map((ingredient, index) => (
-            <label
-              data-testid={ `${index}-ingredient-step` }
-              key={ index }
-              style={ doneSteps[index].done ? style : {} }
-            >
-              <input
-                type="checkbox"
-                value={ index }
-                checked={ doneSteps[index].done || doneRecipes
-                  .some((doneRecipe) => doneRecipe.id === id) }
-                onChange={ handleCheckBox }
-              />
-              {ingredient}
-            </label>
-          ))
-        }
+      <section
+        className="instructions"
+      >
+        <h4>
+          Ingredients
+        </h4>
+        <div
+          className="ing-list"
+        >
+          {
+            ingredients.map((ingredient, index) => (
+              <label
+                data-testid={ `${index}-ingredient-step` }
+                className="label-ingredient"
+                key={ index }
+                style={ doneSteps[index].done ? style : {} }
+              >
+                <input
+                  className="checkbox-ingredient"
+                  type="checkbox"
+                  value={ index }
+                  checked={ doneSteps[index].done || doneRecipes
+                    .some((doneRecipe) => doneRecipe.id === id) }
+                  onChange={ handleCheckBox }
+                />
+                {ingredient}
+              </label>
+            ))
+          }
+        </div>
       </section>
       <button
+        className="fixed-btn-pos"
         data-testid="finish-recipe-btn"
         disabled={ doneSteps.some(({ done }) => !done) }
         onClick={ () => saveAndRedirect(recipe) }
